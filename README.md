@@ -1,6 +1,6 @@
-# 🕌 Waktu Solat Malaysia — React App
+# 🕌 Jam Waktu Solat Institut Teknologi Unggas — React App
 
-Aplikasi waktu solat Malaysia dengan alarm peringatan 2 minit sebelum masuk waktu. Data dari [api.waktusolat.app](https://api.waktusolat.app) (sumber rasmi JAKIM).
+Aplikasi Jam Waktu Solat Institut Teknologi Unggas dengan alarm peringatan 2 minit sebelum masuk waktu. Data dari [api.waktusolat.app](https://api.waktusolat.app) (sumber rasmi JAKIM).
 
 ---
 
