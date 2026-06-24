@@ -847,7 +847,7 @@ export default function WaktuSolat() {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:10 }}>
           <div>
             <div style={{ fontSize:14, fontWeight:700, color:T.text }}>🔔 Alarm Peringatan</div>
-            <div style={{ fontSize:12, color:T.textMid, marginTop:2 }}>Beep countdown 10 saat · Kriing masuk waktu</div>
+            <div style={{ fontSize:12, color:T.textMid, marginTop:2 }}>Beep countdown 20 saat · Kriing masuk waktu</div>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
             <button onClick={e=>{e.stopPropagation();initAudio();setTimeout(()=>beepTick(audioRef.current),50);}} style={{ padding:"7px 14px", borderRadius:8, border:`1px solid ${G}`, background:T.greenBg, color:G, fontSize:12, cursor:"pointer" }}>🔊 Test</button>
