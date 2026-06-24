@@ -572,6 +572,21 @@ export default function WaktuSolat() {
 
   useEffect(() => { const t=setInterval(()=>setNow(new Date()),1000); return()=>clearInterval(t); }, []);
 
+  // Auto-init audio on first user interaction
+  useEffect(() => {
+    const autoInit = () => {
+      initAudio();
+      document.removeEventListener("click", autoInit);
+      document.removeEventListener("keydown", autoInit);
+    };
+    document.addEventListener("click", autoInit);
+    document.addEventListener("keydown", autoInit);
+    return () => {
+      document.removeEventListener("click", autoInit);
+      document.removeEventListener("keydown", autoInit);
+    };
+  }, [initAudio]);
+
   // Auto rotate hadith every 12 saat with fade
   useEffect(() => {
     const t = setInterval(() => {
@@ -712,7 +727,7 @@ export default function WaktuSolat() {
       <div style={{ background:T.bgHeader, borderBottom:`3px solid ${G}`, padding:"14px 28px", display:"flex", alignItems:"center", gap:20, transition:"background 1s ease" }}>
 
         {/* Logo besar */}
-        <img src="/icon-512.png" alt="Logo" style={{ width:90, height:90, objectFit:"contain" }} />
+        <img src="/icon-512.png" alt="Logo" style={{ width:180, height:180, objectFit:"contain" }} />
 
         {/* Nama institusi */}
         <div style={{ flex:1 }}>
