@@ -456,6 +456,17 @@ function Chicken({ type, size, speed, startX, startY }) {
     return () => { clearInterval(walk); clearInterval(peckTimer); clearInterval(jumpTimer); };
   }, [speed, size]);
 
+  const CHICKEN_COLORS = {
+    jantan:   { body:"#8B4513", head:"#CD853F", comb:"#DC143C", beak:"#DAA520", leg:"#DAA520", tail:"#4a2800" },
+    betina:   { body:"#D2691E", head:"#DEB887", comb:"#FF6B6B", beak:"#DAA520", leg:"#DAA520", tail:"#8B4513" },
+    pedaging: { body:"#F5F5DC", head:"#FFFACD", comb:"#FF4500", beak:"#FFD700", leg:"#FFA500", tail:"#DDD" },
+    penelur:  { body:"#8B0000", head:"#A0522D", comb:"#FF0000", beak:"#FFD700", leg:"#DAA520", tail:"#600000" },
+    puyuh:    { body:"#8B7355", head:"#A0896C", comb:"#8B4513", beak:"#DAA520", leg:"#DAA520", tail:"#6B5B3E" },
+    anak:     { body:"#FFD700", head:"#FFE44D", comb:"#FFA500", beak:"#FFA500", leg:"#FFA500", tail:"#FFC000" },
+  };
+
+  const chickenColor = CHICKEN_COLORS[type] || CHICKEN_COLORS.betina;
+
   // Kaki animation — alternate lifting
   const legSwing = Math.sin(frame * Math.PI / 4) * 12;
   const bodyBob = Math.abs(Math.sin(frame * Math.PI / 4)) * 3;
@@ -475,14 +486,7 @@ function Chicken({ type, size, speed, startX, startY }) {
       {/* Kepala + badan dengan bob */}
       <svg width={size} height={size} viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
         {(() => {
-          const c = {
-            jantan:   { body:"#8B4513", head:"#CD853F", comb:"#DC143C", beak:"#DAA520", leg:"#DAA520", tail:"#4a2800" },
-            betina:   { body:"#D2691E", head:"#DEB887", comb:"#FF6B6B", beak:"#DAA520", leg:"#DAA520", tail:"#8B4513" },
-            pedaging: { body:"#F5F5DC", head:"#FFFACD", comb:"#FF4500", beak:"#FFD700", leg:"#FFA500", tail:"#DDD" },
-            penelur:  { body:"#8B0000", head:"#A0522D", comb:"#FF0000", beak:"#FFD700", leg:"#DAA520", tail:"#600000" },
-            puyuh:    { body:"#8B7355", head:"#A0896C", comb:"#8B4513", beak:"#DAA520", leg:"#DAA520", tail:"#6B5B3E" },
-            anak:     { body:"#FFD700", head:"#FFE44D", comb:"#FFA500", beak:"#FFA500", leg:"#FFA500", tail:"#FFC000" },
-          }[type] || { body:"#D2691E", head:"#DEB887", comb:"#FF6B6B", beak:"#DAA520", leg:"#DAA520", tail:"#8B4513" };
+          const c = chickenColor;
 
           return (
             <>
@@ -704,11 +708,11 @@ export default function WaktuSolat() {
       if(!p.sec) return;
       const diff=p.sec-ns;
       if(diff>=1&&diff<=10){
-        const k=`${zon}_${p.key}_beep_${diff}_${now.toDateString()}`;
-        if(!firedRef.current[k]){ firedRef.current[k]=true; beepTick(audioRef.current); }
+        const alarmKey=`${zon}_${p.key}_beep_${diff}_${now.toDateString()}`;
+        if(!firedRef.current[alarmKey]){ firedRef.current[alarmKey]=true; beepTick(audioRef.current); }
       }
-      const ka=`${zon}_${p.key}_adhan_${now.toDateString()}`;
-      if(diff>=-3&&diff<=3&&!firedRef.current[ka]){ firedRef.current[ka]=true; beepAdhan(audioRef.current); }
+      const adhanKey=`${zon}_${p.key}_adhan_${now.toDateString()}`;
+      if(diff>=-3&&diff<=3&&!firedRef.current[adhanKey]){ firedRef.current[adhanKey]=true; beepAdhan(audioRef.current); }
     });
   }, [ns, alarmOn, zon]);
 
