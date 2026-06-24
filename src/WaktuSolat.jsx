@@ -578,6 +578,7 @@ export default function WaktuSolat() {
   const [now, setNow] = useState(new Date());
   const [alarmOn, setAlarmOn] = useState(true);
   const [audioReady, setAudioReady] = useState(false);
+  const [weather, setWeather] = useState(null);
   const [hadithIdx, setHadithIdx] = useState(0);
   const [hadithFade, setHadithFade] = useState(true);
   const [liveData, setLiveData] = useState(null);
@@ -623,18 +624,50 @@ export default function WaktuSolat() {
     return () => clearInterval(t);
   }, []);
 
+  // ── FETCH CUACA dari Open-Meteo ───────────────────────────────────────────
+  const fetchWeather = useCallback(async (lat, lng) => {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Asia%2FKuala_Lumpur`;
+      const res = await fetch(url);
+      const json = await res.json();
+      if (json.current) {
+        const code = json.current.weather_code;
+        const getWeatherInfo = (c) => {
+          if (c === 0) return { icon:"☀️", desc:"Cerah" };
+          if (c <= 2) return { icon:"🌤️", desc:"Sebahagian Berawan" };
+          if (c === 3) return { icon:"☁️", desc:"Berawan" };
+          if (c <= 49) return { icon:"🌫️", desc:"Kabus" };
+          if (c <= 59) return { icon:"🌦️", desc:"Renyai" };
+          if (c <= 69) return { icon:"🌧️", desc:"Hujan" };
+          if (c <= 79) return { icon:"🌨️", desc:"Salji" };
+          if (c <= 84) return { icon:"🌧️", desc:"Hujan Lebat" };
+          if (c <= 99) return { icon:"⛈️", desc:"Ribut Petir" };
+          return { icon:"🌡️", desc:"Tidak Diketahui" };
+        };
+        const info = getWeatherInfo(code);
+        setWeather({
+          temp: Math.round(json.current.temperature_2m),
+          humidity: json.current.relative_humidity_2m,
+          wind: Math.round(json.current.wind_speed_10m),
+          icon: info.icon,
+          desc: info.desc,
+        });
+      }
+    } catch(e) {
+      console.log("Weather fetch failed:", e);
+    }
+  }, []);
+
   // ── FETCH LIVE DATA dari API ──────────────────────────────────────────────
   const fetchPrayerData = useCallback(async (zonCode) => {
     setApiStatus("loading");
     const now = new Date();
     const month = now.getMonth() + 1;
     const year = now.getFullYear();
-
     try {
       const res = await fetch(`/api/solat?zon=${zonCode}&month=${month}&year=${year}`);
       if (!res.ok) throw new Error("API error");
       const json = await res.json();
-
       if (json.prayerTime && Array.isArray(json.prayerTime)) {
         const today = new Date();
         const day = String(today.getDate()).padStart(2,"0");
@@ -642,7 +675,6 @@ export default function WaktuSolat() {
         const mon = months[today.getMonth()];
         const yr = today.getFullYear();
         const todayStr = `${day}-${mon}-${yr}`;
-
         const todayData = json.prayerTime.find(p => p.date === todayStr);
         if (todayData) {
           setLiveData({
@@ -670,9 +702,19 @@ export default function WaktuSolat() {
     const daerahData = daerahList.find(d => d.daerah === daerah) || daerahList[0];
     if (daerahData) {
       fetchPrayerData(daerahData.zon);
+      fetchWeather(daerahData.lat, daerahData.lng);
       firedRef.current = {};
     }
-  }, [negeri, daerah, fetchPrayerData]);
+  }, [negeri, daerah, fetchPrayerData, fetchWeather]);
+
+  // Refresh cuaca setiap 10 minit
+  useEffect(() => {
+    const daerahList = DAERAH_DB[negeri] || [];
+    const daerahData = daerahList.find(d => d.daerah === daerah) || daerahList[0];
+    if (!daerahData) return;
+    const t = setInterval(() => fetchWeather(daerahData.lat, daerahData.lng), 10 * 60 * 1000);
+    return () => clearInterval(t);
+  }, [negeri, daerah, fetchWeather]);
 
   const daerahList = DAERAH_DB[negeri] || [];
   const daerahData = daerahList.find(d => d.daerah === daerah) || daerahList[0] || { zon:"WLY01", lat:3.139, lng:101.687 };
@@ -771,6 +813,27 @@ export default function WaktuSolat() {
           )}
         </div>
 
+        {/* Cuaca */}
+        <div style={{ padding:"12px 16px", borderRadius:10, background:T.bgCard, border:`1.5px solid ${T.border}`, textAlign:"center", minWidth:130 }}>
+          <div style={{ fontSize:11, letterSpacing:2, color:T.textDim, textTransform:"uppercase", marginBottom:4 }}>Cuaca</div>
+          {weather ? (
+            <>
+              <div style={{ fontSize:36 }}>{weather.icon}</div>
+              <div style={{ fontSize:28, fontWeight:700, color:T.text, fontFamily:"'Courier New',monospace", lineHeight:1 }}>{weather.temp}°C</div>
+              <div style={{ fontSize:12, color:T.textMid, marginTop:2 }}>{weather.desc}</div>
+              <div style={{ fontSize:11, color:T.textDim, marginTop:4, display:"flex", gap:8, justifyContent:"center" }}>
+                <span>💧{weather.humidity}%</span>
+                <span>🌬️{weather.wind}km/h</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ fontSize:28 }}>🌡️</div>
+              <div style={{ fontSize:12, color:T.textDim, marginTop:4 }}>Memuatkan...</div>
+            </>
+          )}
+        </div>
+
         {/* Negeri + Daerah picker */}
         <div style={{ position:"relative" }}>
           <button onClick={e=>{e.stopPropagation();setShowPicker(v=>!v);}} style={{ padding:"8px 14px", background:T.greenBg, border:`1px solid ${G}`, borderRadius:8, color:G, fontSize:13, cursor:"pointer", fontWeight:600, textAlign:"left" }}>
@@ -847,7 +910,7 @@ export default function WaktuSolat() {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:10 }}>
           <div>
             <div style={{ fontSize:14, fontWeight:700, color:T.text }}>🔔 Alarm Peringatan</div>
-            <div style={{ fontSize:12, color:T.textMid, marginTop:2 }}>Beep countdown 20 saat · Kriing masuk waktu</div>
+            <div style={{ fontSize:12, color:T.textMid, marginTop:2 }}>Beep countdown 20 saat · Kriing 3x masuk waktu</div>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
             <button onClick={e=>{e.stopPropagation();initAudio();setTimeout(()=>beepTick(audioRef.current),50);}} style={{ padding:"7px 14px", borderRadius:8, border:`1px solid ${G}`, background:T.greenBg, color:G, fontSize:12, cursor:"pointer" }}>🔊 Test</button>
@@ -863,7 +926,7 @@ export default function WaktuSolat() {
       <div style={{ borderTop:`1px solid ${T.border}`, background:T.bgCard, padding:"10px 24px", display:"flex", justifyContent:"space-between", alignItems:"center", transition:"background 1s ease" }}>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <img src="/icon-512.png" alt="" style={{ width:24, height:24, objectFit:"contain" }} />
-          <span style={{ fontSize:11, color:T.textDim }}>Institut Teknologi Unggas · jamsolatitu.netlify.app</span>
+          <span style={{ fontSize:11, color:T.textDim }}>Institut Teknologi Unggas · jamsolat.vercel.app</span>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <span style={{ fontSize:11, color:T.textDim }}>Data: api.waktusolat.app · JAKIM · {daerah}, {negeri} ({zon})</span>
