@@ -637,51 +637,39 @@ export default function WaktuSolat() {
     const month = now.getMonth() + 1;
     const year = now.getFullYear();
 
-    // Cuba beberapa proxy
-    const proxies = [
-      `https://corsproxy.io/?https://api.waktusolat.app/solat/${zonCode}?month=${month}&year=${year}`,
-      `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.waktusolat.app/solat/${zonCode}?month=${month}&year=${year}`)}`,
-    ];
+    try {
+      // Guna Vercel API route sendiri sebagai proxy
+      const res = await fetch(`/api/solat?zon=${zonCode}&month=${month}&year=${year}`);
+      if (!res.ok) throw new Error("API error");
+      const json = await res.json();
 
-    for (const url of proxies) {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) continue;
-        const raw = await res.json();
+      if (json.prayerTime && Array.isArray(json.prayerTime)) {
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2,"0");
+        const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        const mon = months[today.getMonth()];
+        const yr = today.getFullYear();
+        const todayStr = `${day}-${mon}-${yr}`;
 
-        // allorigins wraps dalam .contents
-        const json = raw.contents ? JSON.parse(raw.contents) : raw;
-
-        if (json.prayerTime && Array.isArray(json.prayerTime)) {
-          // Cari hari ini
-          const today = new Date();
-          const day = String(today.getDate()).padStart(2,"0");
-          const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-          const mon = months[today.getMonth()];
-          const yr = today.getFullYear();
-          const todayStr = `${day}-${mon}-${yr}`;
-
-          const todayData = json.prayerTime.find(p => p.date === todayStr);
-          if (todayData) {
-            setLiveData({
-              fajr:    todayData.fajr?.slice(0,5),
-              syuruk:  todayData.syuruk?.slice(0,5),
-              dhuhr:   todayData.dhuhr?.slice(0,5),
-              asr:     todayData.asr?.slice(0,5),
-              maghrib: todayData.maghrib?.slice(0,5),
-              isha:    todayData.isha?.slice(0,5),
-            });
-            setApiStatus("ok");
-            return;
-          }
+        const todayData = json.prayerTime.find(p => p.date === todayStr);
+        if (todayData) {
+          setLiveData({
+            fajr:    todayData.fajr?.slice(0,5),
+            syuruk:  todayData.syuruk?.slice(0,5),
+            dhuhr:   todayData.dhuhr?.slice(0,5),
+            asr:     todayData.asr?.slice(0,5),
+            maghrib: todayData.maghrib?.slice(0,5),
+            isha:    todayData.isha?.slice(0,5),
+          });
+          setApiStatus("ok");
+          return;
         }
-      } catch(e) {
-        continue;
       }
+      throw new Error("Data tidak dijumpai");
+    } catch(e) {
+      setApiStatus("error");
+      setLiveData(null);
     }
-    // Gagal — guna hardcode
-    setApiStatus("error");
-    setLiveData(null);
   }, []);
 
   // Fetch bila daerah bertukar
