@@ -752,7 +752,7 @@ export default function WaktuSolat() {
       const ka=`${zon}_${p.key}_adhan_${now.toDateString()}`;
       if(diff>=-3&&diff<=3&&!firedRef.current[ka]){ firedRef.current[ka]=true; beepAdhan(audioRef.current); }
     });
-  }, [ns, alarmOn, zone]);
+  }, [ns, alarmOn, zon]);
 
   const pad=n=>String(n).padStart(2,"0");
   const timeStr=`${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
