@@ -62,22 +62,17 @@ function beepTick(ctx) {
 
 function beepAdhan(ctx) {
   if(!ctx) return;
-  const notes=[
-    {f:392,t:0.0,d:0.6},{f:440,t:0.7,d:0.6},{f:523,t:1.4,d:0.8},
-    {f:494,t:2.3,d:0.5},{f:440,t:2.9,d:0.9},{f:392,t:3.9,d:0.6},
-    {f:349,t:4.6,d:0.8},{f:392,t:5.5,d:0.6},{f:440,t:6.2,d:0.6},
-    {f:523,t:6.9,d:0.8},{f:440,t:7.8,d:0.6},{f:392,t:8.5,d:1.2},
-  ];
-  notes.forEach(({f,t,d})=>{
+  // 3 beep serius — pendek, tegas, selang 0.5 saat
+  [0, 0.55, 1.1].forEach(t => {
     const o=ctx.createOscillator(), g=ctx.createGain();
     o.connect(g); g.connect(ctx.destination);
-    o.frequency.value=f; o.type="sine";
+    o.frequency.value=880; o.type="square";
     const st=ctx.currentTime+t;
     g.gain.setValueAtTime(0,st);
-    g.gain.linearRampToValueAtTime(0.5,st+0.06);
-    g.gain.setValueAtTime(0.5,st+d-0.1);
-    g.gain.exponentialRampToValueAtTime(0.001,st+d);
-    o.start(st); o.stop(st+d+0.05);
+    g.gain.linearRampToValueAtTime(0.35,st+0.03);
+    g.gain.setValueAtTime(0.35,st+0.28);
+    g.gain.exponentialRampToValueAtTime(0.001,st+0.42);
+    o.start(st); o.stop(st+0.45);
   });
 }
 
