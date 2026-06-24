@@ -1,23 +1,248 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
+// ─── DATABASE DAERAH ─────────────────────────────────────────────────────────
+const DAERAH_DB = {
+  "Wilayah Persekutuan": [
+    { daerah:"Kuala Lumpur",  zon:"WLY01", lat:3.1390,  lng:101.6869 },
+    { daerah:"Putrajaya",     zon:"WLY01", lat:2.9264,  lng:101.6964 },
+    { daerah:"Labuan",        zon:"WLY02", lat:5.2831,  lng:115.2308 },
+  ],
+  "Selangor": [
+    { daerah:"Gombak",              zon:"SGR01", lat:3.2674,  lng:101.7014 },
+    { daerah:"Petaling Jaya",       zon:"SGR01", lat:3.1073,  lng:101.6067 },
+    { daerah:"Shah Alam",           zon:"SGR01", lat:3.0733,  lng:101.5185 },
+    { daerah:"Subang Jaya",         zon:"SGR01", lat:3.0506,  lng:101.5812 },
+    { daerah:"Hulu Langat",         zon:"SGR01", lat:3.0021,  lng:101.8356 },
+    { daerah:"Hulu Selangor",       zon:"SGR01", lat:3.5693,  lng:101.6490 },
+    { daerah:"Sepang",              zon:"SGR01", lat:2.7400,  lng:101.7070 },
+    { daerah:"Ampang",              zon:"SGR01", lat:3.1488,  lng:101.7621 },
+    { daerah:"Kajang",              zon:"SGR01", lat:2.9930,  lng:101.7877 },
+    { daerah:"Kuala Selangor",      zon:"SGR02", lat:3.3404,  lng:101.2565 },
+    { daerah:"Sabak Bernam",        zon:"SGR02", lat:3.7743,  lng:100.9753 },
+    { daerah:"Tanjong Karang",      zon:"SGR02", lat:3.4213,  lng:101.1843 },
+    { daerah:"Klang",               zon:"SGR03", lat:3.0449,  lng:101.4455 },
+    { daerah:"Kuala Langat",        zon:"SGR03", lat:2.8089,  lng:101.4993 },
+    { daerah:"Banting",             zon:"SGR03", lat:2.8157,  lng:101.5021 },
+  ],
+  "Melaka": [
+    { daerah:"Melaka Tengah",       zon:"MLK01", lat:2.1896,  lng:102.2501 },
+    { daerah:"Alor Gajah",          zon:"MLK01", lat:2.3822,  lng:102.2084 },
+    { daerah:"Masjid Tanah",        zon:"MLK01", lat:2.5163,  lng:102.0762 },
+    { daerah:"Merlimau",            zon:"MLK01", lat:2.2003,  lng:102.4356 },
+    { daerah:"Jasin",               zon:"MLK01", lat:2.3082,  lng:102.4330 },
+    { daerah:"Ayer Keroh",          zon:"MLK01", lat:2.2636,  lng:102.2774 },
+    { daerah:"Batu Berendam",       zon:"MLK01", lat:2.2458,  lng:102.2528 },
+    { daerah:"Tanjung Kling",       zon:"MLK01", lat:2.2697,  lng:102.1464 },
+    { daerah:"Bemban",              zon:"MLK01", lat:2.3641,  lng:102.3821 },
+    { daerah:"Rembia",              zon:"MLK01", lat:2.4276,  lng:102.1853 },
+  ],
+  "Johor": [
+    { daerah:"Johor Bahru",         zon:"JHR02", lat:1.4927,  lng:103.7414 },
+    { daerah:"Kota Tinggi",         zon:"JHR02", lat:1.7374,  lng:103.9021 },
+    { daerah:"Mersing",             zon:"JHR02", lat:2.4405,  lng:103.8397 },
+    { daerah:"Kulai",               zon:"JHR02", lat:1.6597,  lng:103.5968 },
+    { daerah:"Pasir Gudang",        zon:"JHR02", lat:1.4694,  lng:103.8980 },
+    { daerah:"Skudai",              zon:"JHR02", lat:1.5327,  lng:103.6777 },
+    { daerah:"Iskandar Puteri",     zon:"JHR02", lat:1.4234,  lng:103.6344 },
+    { daerah:"Kluang",              zon:"JHR03", lat:2.0263,  lng:103.3191 },
+    { daerah:"Pontian",             zon:"JHR03", lat:1.4891,  lng:103.3893 },
+    { daerah:"Batu Pahat",          zon:"JHR04", lat:1.8535,  lng:102.9329 },
+    { daerah:"Muar",                zon:"JHR04", lat:2.0442,  lng:102.5689 },
+    { daerah:"Segamat",             zon:"JHR04", lat:2.5145,  lng:102.8143 },
+    { daerah:"Tangkak",             zon:"JHR04", lat:2.2667,  lng:102.5500 },
+    { daerah:"Gemas",               zon:"JHR04", lat:2.5855,  lng:102.5983 },
+  ],
+  "Negeri Sembilan": [
+    { daerah:"Tampin",              zon:"NGS01", lat:2.4732,  lng:102.2264 },
+    { daerah:"Jempol",              zon:"NGS01", lat:3.0677,  lng:102.5779 },
+    { daerah:"Bahau",               zon:"NGS01", lat:2.8015,  lng:102.3979 },
+    { daerah:"Jelebu",              zon:"NGS02", lat:3.0326,  lng:102.0810 },
+    { daerah:"Kuala Pilah",         zon:"NGS02", lat:2.7385,  lng:102.2478 },
+    { daerah:"Rembau",              zon:"NGS02", lat:2.5936,  lng:102.0895 },
+    { daerah:"Port Dickson",        zon:"NGS03", lat:2.5228,  lng:101.7958 },
+    { daerah:"Seremban",            zon:"NGS03", lat:2.7297,  lng:101.9381 },
+    { daerah:"Nilai",               zon:"NGS03", lat:2.8124,  lng:101.7979 },
+  ],
+  "Pahang": [
+    { daerah:"Kuantan",             zon:"PHG02", lat:3.8077,  lng:103.3260 },
+    { daerah:"Pekan",               zon:"PHG02", lat:3.4875,  lng:103.3826 },
+    { daerah:"Muadzam Shah",        zon:"PHG02", lat:3.0580,  lng:103.0842 },
+    { daerah:"Jerantut",            zon:"PHG03", lat:3.9343,  lng:102.3579 },
+    { daerah:"Temerloh",            zon:"PHG03", lat:3.4520,  lng:102.4183 },
+    { daerah:"Maran",               zon:"PHG03", lat:3.5934,  lng:102.7558 },
+    { daerah:"Bera",                zon:"PHG03", lat:3.3691,  lng:102.5706 },
+    { daerah:"Bentong",             zon:"PHG04", lat:3.5191,  lng:101.9077 },
+    { daerah:"Lipis",               zon:"PHG04", lat:4.1775,  lng:102.0503 },
+    { daerah:"Raub",                zon:"PHG04", lat:3.7893,  lng:101.8582 },
+    { daerah:"Cameron Highlands",   zon:"PHG06", lat:4.4682,  lng:101.3796 },
+    { daerah:"Fraser's Hill",       zon:"PHG06", lat:3.7167,  lng:101.7333 },
+    { daerah:"Rompin",              zon:"PHG07", lat:2.7918,  lng:103.4877 },
+  ],
+  "Perak": [
+    { daerah:"Ipoh",                zon:"PRK02", lat:4.5975,  lng:101.0901 },
+    { daerah:"Kuala Kangsar",       zon:"PRK02", lat:4.7726,  lng:100.9357 },
+    { daerah:"Sg. Siput",           zon:"PRK02", lat:4.8407,  lng:101.0618 },
+    { daerah:"Batu Gajah",          zon:"PRK02", lat:4.4724,  lng:101.0290 },
+    { daerah:"Kampar",              zon:"PRK02", lat:4.3074,  lng:101.1508 },
+    { daerah:"Tapah",               zon:"PRK01", lat:4.1973,  lng:101.2664 },
+    { daerah:"Tanjung Malim",       zon:"PRK01", lat:3.6850,  lng:101.5163 },
+    { daerah:"Slim River",          zon:"PRK01", lat:3.8143,  lng:101.4000 },
+    { daerah:"Grik",                zon:"PRK03", lat:5.4292,  lng:101.1258 },
+    { daerah:"Lenggong",            zon:"PRK03", lat:5.0986,  lng:100.9644 },
+    { daerah:"Teluk Intan",         zon:"PRK05", lat:4.0239,  lng:101.0228 },
+    { daerah:"Sitiawan",            zon:"PRK05", lat:4.2193,  lng:100.6992 },
+    { daerah:"Lumut",               zon:"PRK05", lat:4.2342,  lng:100.6291 },
+    { daerah:"Pulau Pangkor",       zon:"PRK05", lat:4.2189,  lng:100.5619 },
+    { daerah:"Taiping",             zon:"PRK06", lat:4.8489,  lng:100.7359 },
+    { daerah:"Bagan Serai",         zon:"PRK06", lat:5.0086,  lng:100.5280 },
+    { daerah:"Parit Buntar",        zon:"PRK06", lat:5.1255,  lng:100.4977 },
+  ],
+  "Kedah": [
+    { daerah:"Alor Setar",          zon:"KDH01", lat:6.1184,  lng:100.3685 },
+    { daerah:"Kubang Pasu",         zon:"KDH01", lat:6.3539,  lng:100.4245 },
+    { daerah:"Sungai Petani",       zon:"KDH02", lat:5.6479,  lng:100.4873 },
+    { daerah:"Kuala Muda",          zon:"KDH02", lat:5.7024,  lng:100.4079 },
+    { daerah:"Pendang",             zon:"KDH02", lat:5.9982,  lng:100.4808 },
+    { daerah:"Yan",                 zon:"KDH02", lat:5.7851,  lng:100.3797 },
+    { daerah:"Sik",                 zon:"KDH03", lat:5.9482,  lng:100.7397 },
+    { daerah:"Padang Terap",        zon:"KDH03", lat:6.2500,  lng:100.7333 },
+    { daerah:"Baling",              zon:"KDH04", lat:5.6745,  lng:100.9217 },
+    { daerah:"Kulim",               zon:"KDH05", lat:5.3648,  lng:100.5611 },
+    { daerah:"Bandar Baharu",       zon:"KDH05", lat:5.2390,  lng:100.5619 },
+    { daerah:"Langkawi",            zon:"KDH06", lat:6.3500,  lng:99.8000  },
+  ],
+  "Perlis": [
+    { daerah:"Kangar",              zon:"PLS01", lat:6.4449,  lng:100.1986 },
+    { daerah:"Arau",                zon:"PLS01", lat:6.4248,  lng:100.2707 },
+    { daerah:"Padang Besar",        zon:"PLS01", lat:6.6478,  lng:100.3243 },
+    { daerah:"Wang Kelian",         zon:"PLS01", lat:6.3794,  lng:100.0911 },
+  ],
+  "Pulau Pinang": [
+    { daerah:"George Town",         zon:"PNG01", lat:5.4141,  lng:100.3288 },
+    { daerah:"Bayan Lepas",         zon:"PNG01", lat:5.2966,  lng:100.2726 },
+    { daerah:"Butterworth",         zon:"PNG01", lat:5.3989,  lng:100.3638 },
+    { daerah:"Bukit Mertajam",      zon:"PNG01", lat:5.3637,  lng:100.4618 },
+    { daerah:"Kepala Batas",        zon:"PNG01", lat:5.5218,  lng:100.4241 },
+    { daerah:"Nibong Tebal",        zon:"PNG01", lat:5.1610,  lng:100.4704 },
+    { daerah:"Balik Pulau",         zon:"PNG01", lat:5.3508,  lng:100.2340 },
+  ],
+  "Kelantan": [
+    { daerah:"Kota Bharu",          zon:"KTN01", lat:6.1254,  lng:102.2381 },
+    { daerah:"Bachok",              zon:"KTN01", lat:6.0663,  lng:102.3968 },
+    { daerah:"Machang",             zon:"KTN01", lat:5.7699,  lng:102.2135 },
+    { daerah:"Pasir Mas",           zon:"KTN01", lat:6.0449,  lng:102.1403 },
+    { daerah:"Pasir Puteh",         zon:"KTN01", lat:5.8316,  lng:102.4007 },
+    { daerah:"Tanah Merah",         zon:"KTN01", lat:5.8071,  lng:102.1503 },
+    { daerah:"Tumpat",              zon:"KTN01", lat:6.1978,  lng:102.1710 },
+    { daerah:"Kuala Krai",          zon:"KTN01", lat:5.5327,  lng:102.1974 },
+    { daerah:"Gua Musang",          zon:"KTN02", lat:4.8826,  lng:101.9614 },
+    { daerah:"Jeli",                zon:"KTN02", lat:5.6946,  lng:101.8430 },
+  ],
+  "Terengganu": [
+    { daerah:"Kuala Terengganu",    zon:"TRG01", lat:5.3296,  lng:103.1370 },
+    { daerah:"Marang",              zon:"TRG01", lat:5.2024,  lng:103.2131 },
+    { daerah:"Kuala Nerus",         zon:"TRG01", lat:5.4266,  lng:103.1201 },
+    { daerah:"Besut",               zon:"TRG02", lat:5.7125,  lng:102.5658 },
+    { daerah:"Setiu",               zon:"TRG02", lat:5.5488,  lng:102.8997 },
+    { daerah:"Hulu Terengganu",     zon:"TRG03", lat:4.9456,  lng:102.7807 },
+    { daerah:"Dungun",              zon:"TRG04", lat:4.7577,  lng:103.4217 },
+    { daerah:"Kemaman",             zon:"TRG04", lat:4.2274,  lng:103.4174 },
+    { daerah:"Chukai",              zon:"TRG04", lat:4.2442,  lng:103.4248 },
+  ],
+  "Sabah": [
+    { daerah:"Kota Kinabalu",       zon:"SBH07", lat:5.9804,  lng:116.0735 },
+    { daerah:"Penampang",           zon:"SBH07", lat:5.9005,  lng:116.0988 },
+    { daerah:"Papar",               zon:"SBH07", lat:5.7367,  lng:115.9344 },
+    { daerah:"Tuaran",              zon:"SBH07", lat:6.1776,  lng:116.2340 },
+    { daerah:"Ranau",               zon:"SBH07", lat:5.9594,  lng:116.6694 },
+    { daerah:"Kota Belud",          zon:"SBH07", lat:6.3480,  lng:116.4302 },
+    { daerah:"Sandakan",            zon:"SBH01", lat:5.8402,  lng:118.1179 },
+    { daerah:"Lahad Datu",          zon:"SBH03", lat:5.0272,  lng:118.3305 },
+    { daerah:"Semporna",            zon:"SBH03", lat:4.4782,  lng:118.6140 },
+    { daerah:"Tawau",               zon:"SBH04", lat:4.2449,  lng:117.8912 },
+    { daerah:"Kudat",               zon:"SBH05", lat:6.8871,  lng:116.8484 },
+    { daerah:"Keningau",            zon:"SBH08", lat:5.3376,  lng:116.1621 },
+    { daerah:"Beaufort",            zon:"SBH09", lat:5.3456,  lng:115.7479 },
+    { daerah:"Tenom",               zon:"SBH09", lat:5.1229,  lng:115.9509 },
+  ],
+  "Sarawak": [
+    { daerah:"Kuching",             zon:"SWK08", lat:1.5533,  lng:110.3592 },
+    { daerah:"Bau",                 zon:"SWK08", lat:1.4160,  lng:110.1549 },
+    { daerah:"Lundu",               zon:"SWK08", lat:1.6707,  lng:109.8483 },
+    { daerah:"Samarahan",           zon:"SWK07", lat:1.4541,  lng:110.4602 },
+    { daerah:"Serian",              zon:"SWK07", lat:1.1634,  lng:110.5745 },
+    { daerah:"Sri Aman",            zon:"SWK06", lat:1.2378,  lng:111.4617 },
+    { daerah:"Betong",              zon:"SWK06", lat:1.3961,  lng:111.5189 },
+    { daerah:"Sarikei",             zon:"SWK05", lat:2.1269,  lng:111.5226 },
+    { daerah:"Sibu",                zon:"SWK04", lat:2.2878,  lng:111.8272 },
+    { daerah:"Mukah",               zon:"SWK04", lat:2.8960,  lng:112.0833 },
+    { daerah:"Bintulu",             zon:"SWK03", lat:3.1716,  lng:113.0467 },
+    { daerah:"Miri",                zon:"SWK02", lat:4.3995,  lng:113.9914 },
+    { daerah:"Limbang",             zon:"SWK01", lat:4.7557,  lng:115.0102 },
+    { daerah:"Lawas",               zon:"SWK01", lat:4.8516,  lng:115.4067 },
+  ],
+};
+
+// Waktu solat ikut zon JAKIM
 const PRAYER_DB = {
-  WLY01: { label: "Kuala Lumpur / Putrajaya",    lat:3.1390, lng:101.6869, fajr:"06:02", syuruk:"07:10", dhuhr:"13:20", asr:"16:33", maghrib:"19:25", isha:"20:36" },
-  SGR01: { label: "Selangor – Petaling / Shah Alam", lat:3.0738, lng:101.5183, fajr:"06:01", syuruk:"07:09", dhuhr:"13:19", asr:"16:32", maghrib:"19:24", isha:"20:35" },
-  SGR02: { label: "Selangor – Kuala Selangor",   lat:3.3408, lng:101.2567, fajr:"06:03", syuruk:"07:11", dhuhr:"13:21", asr:"16:34", maghrib:"19:26", isha:"20:37" },
-  SGR03: { label: "Selangor – Klang / Kuala Langat", lat:3.0449, lng:101.4455, fajr:"06:00", syuruk:"07:08", dhuhr:"13:18", asr:"16:31", maghrib:"19:23", isha:"20:34" },
-  JHR02: { label: "Johor Bahru",                  lat:1.4927, lng:103.7414, fajr:"05:59", syuruk:"07:08", dhuhr:"13:14", asr:"16:30", maghrib:"19:21", isha:"20:32" },
-  JHR03: { label: "Johor – Kluang / Pontian",    lat:1.8578, lng:103.3278, fajr:"05:58", syuruk:"07:07", dhuhr:"13:13", asr:"16:29", maghrib:"19:20", isha:"20:31" },
-  MLK01: { label: "Melaka",                       lat:2.1896, lng:102.2501, fajr:"06:00", syuruk:"07:09", dhuhr:"13:16", asr:"16:31", maghrib:"19:22", isha:"20:33" },
-  NGS03: { label: "Seremban / Port Dickson",      lat:2.7297, lng:101.9381, fajr:"06:01", syuruk:"07:10", dhuhr:"13:17", asr:"16:32", maghrib:"19:23", isha:"20:34" },
-  PNG01: { label: "Pulau Pinang",                 lat:5.4141, lng:100.3288, fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
-  KDH01: { label: "Kedah – Kota Setar",           lat:6.1184, lng:100.3685, fajr:"06:07", syuruk:"07:16", dhuhr:"13:25", asr:"16:39", maghrib:"19:31", isha:"20:42" },
-  PRK02: { label: "Perak – Ipoh",                 lat:4.5975, lng:101.0901, fajr:"06:04", syuruk:"07:13", dhuhr:"13:22", asr:"16:36", maghrib:"19:28", isha:"20:39" },
-  KTN01: { label: "Kelantan – Kota Bharu",        lat:6.1254, lng:102.2381, fajr:"06:04", syuruk:"07:14", dhuhr:"13:22", asr:"16:37", maghrib:"19:28", isha:"20:39" },
-  TRG01: { label: "Terengganu – Kuala Terengganu",lat:5.3296, lng:103.1370, fajr:"06:03", syuruk:"07:13", dhuhr:"13:21", asr:"16:36", maghrib:"19:27", isha:"20:38" },
-  PHG02: { label: "Pahang – Kuantan",             lat:3.8077, lng:103.3260, fajr:"06:02", syuruk:"07:12", dhuhr:"13:20", asr:"16:34", maghrib:"19:26", isha:"20:37" },
-  SBH07: { label: "Sabah – Kota Kinabalu",        lat:5.9804, lng:116.0735, fajr:"05:38", syuruk:"06:48", dhuhr:"12:56", asr:"16:09", maghrib:"19:00", isha:"20:11" },
-  SWK08: { label: "Sarawak – Kuching",            lat:1.5533, lng:110.3592, fajr:"05:42", syuruk:"06:52", dhuhr:"12:59", asr:"16:13", maghrib:"19:03", isha:"20:14" },
-  PLS01: { label: "Perlis",                       lat:6.4449, lng:100.1986, fajr:"06:09", syuruk:"07:18", dhuhr:"13:27", asr:"16:41", maghrib:"19:33", isha:"20:44" },
+  WLY01: { fajr:"06:02", syuruk:"07:10", dhuhr:"13:20", asr:"16:33", maghrib:"19:25", isha:"20:36" },
+  WLY02: { fajr:"05:38", syuruk:"06:48", dhuhr:"12:56", asr:"16:09", maghrib:"19:00", isha:"20:11" },
+  SGR01: { fajr:"06:01", syuruk:"07:09", dhuhr:"13:19", asr:"16:32", maghrib:"19:24", isha:"20:35" },
+  SGR02: { fajr:"06:03", syuruk:"07:11", dhuhr:"13:21", asr:"16:34", maghrib:"19:26", isha:"20:37" },
+  SGR03: { fajr:"06:00", syuruk:"07:08", dhuhr:"13:18", asr:"16:31", maghrib:"19:23", isha:"20:34" },
+  JHR01: { fajr:"05:58", syuruk:"07:07", dhuhr:"13:12", asr:"16:28", maghrib:"19:19", isha:"20:30" },
+  JHR02: { fajr:"05:59", syuruk:"07:08", dhuhr:"13:14", asr:"16:30", maghrib:"19:21", isha:"20:32" },
+  JHR03: { fajr:"05:58", syuruk:"07:07", dhuhr:"13:13", asr:"16:29", maghrib:"19:20", isha:"20:31" },
+  JHR04: { fajr:"06:00", syuruk:"07:09", dhuhr:"13:15", asr:"16:31", maghrib:"19:22", isha:"20:33" },
+  MLK01: { fajr:"06:00", syuruk:"07:09", dhuhr:"13:16", asr:"16:31", maghrib:"19:22", isha:"20:33" },
+  NGS01: { fajr:"06:01", syuruk:"07:10", dhuhr:"13:16", asr:"16:31", maghrib:"19:22", isha:"20:33" },
+  NGS02: { fajr:"06:01", syuruk:"07:10", dhuhr:"13:17", asr:"16:32", maghrib:"19:23", isha:"20:34" },
+  NGS03: { fajr:"06:01", syuruk:"07:10", dhuhr:"13:17", asr:"16:32", maghrib:"19:23", isha:"20:34" },
+  PHG01: { fajr:"06:01", syuruk:"07:11", dhuhr:"13:17", asr:"16:33", maghrib:"19:23", isha:"20:35" },
+  PHG02: { fajr:"06:02", syuruk:"07:12", dhuhr:"13:20", asr:"16:34", maghrib:"19:26", isha:"20:37" },
+  PHG03: { fajr:"06:02", syuruk:"07:11", dhuhr:"13:19", asr:"16:34", maghrib:"19:25", isha:"20:36" },
+  PHG04: { fajr:"06:02", syuruk:"07:11", dhuhr:"13:19", asr:"16:33", maghrib:"19:25", isha:"20:36" },
+  PHG05: { fajr:"06:02", syuruk:"07:11", dhuhr:"13:19", asr:"16:33", maghrib:"19:25", isha:"20:36" },
+  PHG06: { fajr:"06:03", syuruk:"07:12", dhuhr:"13:20", asr:"16:34", maghrib:"19:26", isha:"20:37" },
+  PHG07: { fajr:"06:01", syuruk:"07:11", dhuhr:"13:18", asr:"16:33", maghrib:"19:24", isha:"20:35" },
+  PRK01: { fajr:"06:03", syuruk:"07:12", dhuhr:"13:21", asr:"16:35", maghrib:"19:27", isha:"20:38" },
+  PRK02: { fajr:"06:04", syuruk:"07:13", dhuhr:"13:22", asr:"16:36", maghrib:"19:28", isha:"20:39" },
+  PRK03: { fajr:"06:05", syuruk:"07:14", dhuhr:"13:23", asr:"16:37", maghrib:"19:29", isha:"20:40" },
+  PRK04: { fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
+  PRK05: { fajr:"06:04", syuruk:"07:13", dhuhr:"13:22", asr:"16:36", maghrib:"19:28", isha:"20:39" },
+  PRK06: { fajr:"06:05", syuruk:"07:14", dhuhr:"13:23", asr:"16:37", maghrib:"19:29", isha:"20:40" },
+  PRK07: { fajr:"06:05", syuruk:"07:14", dhuhr:"13:23", asr:"16:37", maghrib:"19:29", isha:"20:40" },
+  KDH01: { fajr:"06:07", syuruk:"07:16", dhuhr:"13:25", asr:"16:39", maghrib:"19:31", isha:"20:42" },
+  KDH02: { fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
+  KDH03: { fajr:"06:07", syuruk:"07:16", dhuhr:"13:25", asr:"16:39", maghrib:"19:31", isha:"20:42" },
+  KDH04: { fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
+  KDH05: { fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
+  KDH06: { fajr:"06:08", syuruk:"07:17", dhuhr:"13:26", asr:"16:40", maghrib:"19:32", isha:"20:43" },
+  KDH07: { fajr:"06:07", syuruk:"07:16", dhuhr:"13:25", asr:"16:39", maghrib:"19:31", isha:"20:42" },
+  PLS01: { fajr:"06:09", syuruk:"07:18", dhuhr:"13:27", asr:"16:41", maghrib:"19:33", isha:"20:44" },
+  PNG01: { fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
+  KTN01: { fajr:"06:04", syuruk:"07:14", dhuhr:"13:22", asr:"16:37", maghrib:"19:28", isha:"20:39" },
+  KTN02: { fajr:"06:03", syuruk:"07:12", dhuhr:"13:21", asr:"16:35", maghrib:"19:27", isha:"20:38" },
+  TRG01: { fajr:"06:03", syuruk:"07:13", dhuhr:"13:21", asr:"16:36", maghrib:"19:27", isha:"20:38" },
+  TRG02: { fajr:"06:03", syuruk:"07:13", dhuhr:"13:21", asr:"16:36", maghrib:"19:27", isha:"20:38" },
+  TRG03: { fajr:"06:03", syuruk:"07:12", dhuhr:"13:21", asr:"16:35", maghrib:"19:27", isha:"20:38" },
+  TRG04: { fajr:"06:03", syuruk:"07:12", dhuhr:"13:21", asr:"16:35", maghrib:"19:27", isha:"20:38" },
+  SBH01: { fajr:"05:40", syuruk:"06:50", dhuhr:"12:58", asr:"16:11", maghrib:"19:02", isha:"20:13" },
+  SBH02: { fajr:"05:39", syuruk:"06:49", dhuhr:"12:57", asr:"16:10", maghrib:"19:01", isha:"20:12" },
+  SBH03: { fajr:"05:38", syuruk:"06:48", dhuhr:"12:56", asr:"16:09", maghrib:"19:00", isha:"20:11" },
+  SBH04: { fajr:"05:37", syuruk:"06:47", dhuhr:"12:55", asr:"16:08", maghrib:"18:59", isha:"20:10" },
+  SBH05: { fajr:"05:41", syuruk:"06:51", dhuhr:"12:59", asr:"16:12", maghrib:"19:03", isha:"20:14" },
+  SBH07: { fajr:"05:38", syuruk:"06:48", dhuhr:"12:56", asr:"16:09", maghrib:"19:00", isha:"20:11" },
+  SBH08: { fajr:"05:37", syuruk:"06:47", dhuhr:"12:55", asr:"16:08", maghrib:"18:59", isha:"20:10" },
+  SBH09: { fajr:"05:37", syuruk:"06:47", dhuhr:"12:55", asr:"16:08", maghrib:"18:59", isha:"20:10" },
+  SWK01: { fajr:"05:47", syuruk:"06:57", dhuhr:"13:05", asr:"16:18", maghrib:"19:08", isha:"20:19" },
+  SWK02: { fajr:"05:45", syuruk:"06:55", dhuhr:"13:03", asr:"16:16", maghrib:"19:06", isha:"20:17" },
+  SWK03: { fajr:"05:44", syuruk:"06:54", dhuhr:"13:02", asr:"16:15", maghrib:"19:05", isha:"20:16" },
+  SWK04: { fajr:"05:43", syuruk:"06:53", dhuhr:"13:01", asr:"16:14", maghrib:"19:04", isha:"20:15" },
+  SWK05: { fajr:"05:43", syuruk:"06:53", dhuhr:"13:01", asr:"16:14", maghrib:"19:04", isha:"20:15" },
+  SWK06: { fajr:"05:43", syuruk:"06:53", dhuhr:"13:00", asr:"16:13", maghrib:"19:03", isha:"20:14" },
+  SWK07: { fajr:"05:42", syuruk:"06:52", dhuhr:"12:59", asr:"16:13", maghrib:"19:03", isha:"20:14" },
+  SWK08: { fajr:"05:42", syuruk:"06:52", dhuhr:"12:59", asr:"16:13", maghrib:"19:03", isha:"20:14" },
 };
 
 const PRAYERS = [
@@ -378,13 +603,16 @@ function ChickenFarm() {
 }
 
 export default function WaktuSolat() {
-  const [zone, setZone] = useState("WLY01");
+  const [negeri, setNegeri] = useState("Melaka");
+  const [daerah, setDaerah] = useState("Masjid Tanah");
+  const [showPicker, setShowPicker] = useState(false);
   const [now, setNow] = useState(new Date());
   const [alarmOn, setAlarmOn] = useState(true);
   const [audioReady, setAudioReady] = useState(false);
-  const [showZones, setShowZones] = useState(false);
   const [hadithIdx, setHadithIdx] = useState(0);
   const [hadithFade, setHadithFade] = useState(true);
+  const [liveData, setLiveData] = useState(null);
+  const [apiStatus, setApiStatus] = useState("loading"); // loading | ok | error
   const audioRef = useRef(null);
   const firedRef = useRef({});
 
@@ -402,6 +630,69 @@ export default function WaktuSolat() {
     return () => clearInterval(t);
   }, []);
 
+  // ── FETCH LIVE DATA dari API ──────────────────────────────────────────────
+  const fetchPrayerData = useCallback(async (zonCode) => {
+    setApiStatus("loading");
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+
+    // Cuba beberapa proxy
+    const proxies = [
+      `https://corsproxy.io/?https://api.waktusolat.app/solat/${zonCode}?month=${month}&year=${year}`,
+      `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.waktusolat.app/solat/${zonCode}?month=${month}&year=${year}`)}`,
+    ];
+
+    for (const url of proxies) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        const raw = await res.json();
+
+        // allorigins wraps dalam .contents
+        const json = raw.contents ? JSON.parse(raw.contents) : raw;
+
+        if (json.prayerTime && Array.isArray(json.prayerTime)) {
+          // Cari hari ini
+          const today = new Date();
+          const day = String(today.getDate()).padStart(2,"0");
+          const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+          const mon = months[today.getMonth()];
+          const yr = today.getFullYear();
+          const todayStr = `${day}-${mon}-${yr}`;
+
+          const todayData = json.prayerTime.find(p => p.date === todayStr);
+          if (todayData) {
+            setLiveData({
+              fajr:    todayData.fajr?.slice(0,5),
+              syuruk:  todayData.syuruk?.slice(0,5),
+              dhuhr:   todayData.dhuhr?.slice(0,5),
+              asr:     todayData.asr?.slice(0,5),
+              maghrib: todayData.maghrib?.slice(0,5),
+              isha:    todayData.isha?.slice(0,5),
+            });
+            setApiStatus("ok");
+            return;
+          }
+        }
+      } catch(e) {
+        continue;
+      }
+    }
+    // Gagal — guna hardcode
+    setApiStatus("error");
+    setLiveData(null);
+  }, []);
+
+  // Fetch bila daerah bertukar
+  useEffect(() => {
+    const daerahList = DAERAH_DB[negeri] || [];
+    const daerahData = daerahList.find(d => d.daerah === daerah) || daerahList[0];
+    if (daerahData) {
+      fetchPrayerData(daerahData.zon);
+      firedRef.current = {};
+    }
+  }, [negeri, daerah, fetchPrayerData]);
   const initAudio = useCallback(() => {
     if(!audioRef.current) {
       audioRef.current = new (window.AudioContext||window.webkitAudioContext)();
@@ -411,7 +702,14 @@ export default function WaktuSolat() {
     }
   }, []);
 
-  const data = PRAYER_DB[zone];
+  const daerahList = DAERAH_DB[negeri] || [];
+  const daerahData = daerahList.find(d => d.daerah === daerah) || daerahList[0] || { zon:"WLY01", lat:3.139, lng:101.687 };
+  const zon = daerahData.zon;
+
+  // Guna live data kalau ada, fallback ke hardcode
+  const hardcodeData = PRAYER_DB[zon] || PRAYER_DB["WLY01"];
+  const data = liveData || hardcodeData;
+
   const prayerList = PRAYERS.map(p=>({ ...p, time:data[p.key]||null, sec:data[p.key]?toSec(data[p.key]):null }));
   const ns = nowSec();
 
@@ -424,8 +722,7 @@ export default function WaktuSolat() {
 
   // Auto dark mode — Maghrib hingga Subuh
   const maghribSec = data.maghrib ? toSec(data.maghrib) : 0;
-  const fajrSec = data.fajr ? toSec(data.fajr) : 0;
-  const isDark = ns >= maghribSec || ns < fajrSec;
+  const fajrSec = data.fajr ? toSec(data.fajr) : 0;  const isDark = ns >= maghribSec || ns < fajrSec;
 
   // Theme colors
   const T = {
@@ -449,10 +746,10 @@ export default function WaktuSolat() {
       if(!p.sec) return;
       const diff=p.sec-ns;
       if(diff>=1&&diff<=10){
-        const k=`${zone}_${p.key}_beep_${diff}_${now.toDateString()}`;
+        const k=`${zon}_${p.key}_beep_${diff}_${now.toDateString()}`;
         if(!firedRef.current[k]){ firedRef.current[k]=true; beepTick(audioRef.current); }
       }
-      const ka=`${zone}_${p.key}_adhan_${now.toDateString()}`;
+      const ka=`${zon}_${p.key}_adhan_${now.toDateString()}`;
       if(diff>=-3&&diff<=3&&!firedRef.current[ka]){ firedRef.current[ka]=true; beepAdhan(audioRef.current); }
     });
   }, [ns, alarmOn, zone]);
@@ -477,6 +774,11 @@ export default function WaktuSolat() {
             Jam Solat Surau · Institut Teknologi Unggas
           </div>
           <div style={{ fontSize:13, color:T.textMid, marginTop:3 }}>{dateStr}</div>
+          <div style={{ fontSize:10, marginTop:2 }}>
+            {apiStatus==="loading" && <span style={{ color:T.warn }}>⏳ Memuatkan waktu solat...</span>}
+            {apiStatus==="ok"      && <span style={{ color:G }}>✅ Data live JAKIM</span>}
+            {apiStatus==="error"   && <span style={{ color:"#e63946" }}>⚠️ Guna data anggaran</span>}
+          </div>
         </div>
 
         {/* Analog + Digital */}
@@ -495,18 +797,32 @@ export default function WaktuSolat() {
           </div>
         </div>
 
-        {/* Zone picker */}
+        {/* Negeri + Daerah picker */}
         <div style={{ position:"relative" }}>
-          <button onClick={e=>{e.stopPropagation();setShowZones(v=>!v);}} style={{ padding:"8px 14px", background:T.greenBg, border:`1px solid ${G}`, borderRadius:8, color:G, fontSize:13, cursor:"pointer", fontWeight:600 }}>
-            📍 {zone} {showZones?"▲":"▼"}
+          <button onClick={e=>{e.stopPropagation();setShowPicker(v=>!v);}} style={{ padding:"8px 14px", background:T.greenBg, border:`1px solid ${G}`, borderRadius:8, color:G, fontSize:13, cursor:"pointer", fontWeight:600, textAlign:"left" }}>
+            <div style={{ fontSize:10, color:T.textMid }}>📍 {negeri}</div>
+            <div style={{ fontSize:14, fontWeight:700 }}>{daerah} {showPicker?"▲":"▼"}</div>
+            <div style={{ fontSize:10, color:T.textDim }}>Zon: {zon}</div>
           </button>
-          {showZones && (
-            <div style={{ position:"absolute", right:0, top:"110%", zIndex:99, width:280, borderRadius:8, border:`1px solid ${G}`, background:T.bgCard, overflow:"hidden", maxHeight:300, overflowY:"auto", boxShadow:"0 4px 16px rgba(0,0,0,0.3)" }}>
-              {Object.entries(PRAYER_DB).map(([code,d])=>(
-                <button key={code} onClick={e=>{e.stopPropagation();setZone(code);setShowZones(false);firedRef.current={};}} style={{ width:"100%", padding:"9px 14px", textAlign:"left", background:code===zone?T.greenBg:T.bgCard, border:"none", borderBottom:`1px solid ${T.border}`, color:code===zone?G:T.text, cursor:"pointer", fontSize:12, display:"flex", justifyContent:"space-between" }}>
-                  <span>{d.label}</span>{code===zone&&<span style={{ color:G }}>✓</span>}
-                </button>
-              ))}
+          {showPicker && (
+            <div style={{ position:"absolute", right:0, top:"110%", zIndex:99, width:320, borderRadius:10, border:`1px solid ${G}`, background:T.bgCard, boxShadow:"0 8px 24px rgba(0,0,0,0.2)", overflow:"hidden" }}>
+              {/* Negeri tabs */}
+              <div style={{ display:"flex", flexWrap:"wrap", gap:4, padding:8, borderBottom:`1px solid ${T.border}`, maxHeight:120, overflowY:"auto" }}>
+                {Object.keys(DAERAH_DB).map(n=>(
+                  <button key={n} onClick={e=>{e.stopPropagation();setNegeri(n);setDaerah(DAERAH_DB[n][0].daerah);firedRef.current={};}} style={{ padding:"4px 10px", borderRadius:16, border:`1px solid ${n===negeri?G:T.border}`, background:n===negeri?G:T.bgCard, color:n===negeri?"#fff":T.text, fontSize:11, cursor:"pointer", fontWeight:n===negeri?700:400 }}>
+                    {n}
+                  </button>
+                ))}
+              </div>
+              {/* Daerah list */}
+              <div style={{ maxHeight:240, overflowY:"auto" }}>
+                {(DAERAH_DB[negeri]||[]).map(d=>(
+                  <button key={d.daerah} onClick={e=>{e.stopPropagation();setDaerah(d.daerah);setShowPicker(false);firedRef.current={};}} style={{ width:"100%", padding:"10px 14px", textAlign:"left", background:d.daerah===daerah?T.greenBg:T.bgCard, border:"none", borderBottom:`1px solid ${T.border}`, color:d.daerah===daerah?G:T.text, cursor:"pointer", fontSize:13, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                    <span>{d.daerah}</span>
+                    <span style={{ fontSize:10, color:T.textDim }}>{d.zon}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -574,7 +890,7 @@ export default function WaktuSolat() {
           <span style={{ fontSize:11, color:T.textDim }}>Institut Teknologi Unggas · jamsolatitu.netlify.app</span>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-          <span style={{ fontSize:11, color:T.textDim }}>Data: api.waktusolat.app · JAKIM · {zone}</span>
+          <span style={{ fontSize:11, color:T.textDim }}>Data: api.waktusolat.app · JAKIM · {daerah}, {negeri} ({zon})</span>
           {isDark && <span style={{ fontSize:10, color:G, background:T.greenBg, padding:"2px 8px", borderRadius:10, border:`1px solid ${G}` }}>🌙 Mod Malam</span>}
           {!isDark && <span style={{ fontSize:10, color:"#e8a020", background:"#fff8e6", padding:"2px 8px", borderRadius:10, border:"1px solid #e8a020" }}>☀️ Mod Siang</span>}
         </div>
