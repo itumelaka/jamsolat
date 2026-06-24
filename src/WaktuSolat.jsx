@@ -64,36 +64,50 @@ function fmt(sec) {
 
 function beepTick(ctx) {
   if(!ctx) return;
+  // Beep pendek medium — countdown 10 saat
   const o=ctx.createOscillator(), g=ctx.createGain();
   o.connect(g); g.connect(ctx.destination);
-  o.frequency.value=660; o.type="sine";
+  o.frequency.value=880; o.type="sine";
   g.gain.setValueAtTime(0,ctx.currentTime);
-  g.gain.linearRampToValueAtTime(0.3,ctx.currentTime+0.02);
-  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.15);
-  o.start(ctx.currentTime); o.stop(ctx.currentTime+0.18);
+  g.gain.linearRampToValueAtTime(0.5,ctx.currentTime+0.02);
+  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+  o.start(ctx.currentTime); o.stop(ctx.currentTime+0.22);
 }
 
 function beepAdhan(ctx) {
   if(!ctx) return;
-  // Nada melodik kuat — 5 note ascending
-  const notes=[
-    {f:523,t:0.0,d:0.5},
-    {f:587,t:0.55,d:0.5},
-    {f:659,t:1.1,d:0.5},
-    {f:587,t:1.65,d:0.5},
-    {f:523,t:2.2,d:0.8},
-  ];
-  notes.forEach(({f,t,d})=>{
-    const o=ctx.createOscillator(), g=ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.frequency.value=f; o.type="triangle";
-    const st=ctx.currentTime+t;
-    g.gain.setValueAtTime(0,st);
-    g.gain.linearRampToValueAtTime(0.8,st+0.05);
-    g.gain.setValueAtTime(0.8,st+d-0.08);
-    g.gain.exponentialRampToValueAtTime(0.001,st+d);
-    o.start(st); o.stop(st+d+0.05);
-  });
+  // Bunyi KRIIIINGGG 5 saat — macam loceng
+  const duration = 5.0;
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  o.frequency.value=1046; // C6 — bunyi tinggi macam loceng
+  o.type="sine";
+  // Envelope — naik cepat, sustain, turun perlahan
+  g.gain.setValueAtTime(0, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(0.7, ctx.currentTime+0.05);
+  g.gain.setValueAtTime(0.7, ctx.currentTime+0.3);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+duration);
+  o.start(ctx.currentTime); o.stop(ctx.currentTime+duration);
+
+  // Harmonic kedua — bagi bunyi lebih "ting" macam loceng sebenar
+  const o2=ctx.createOscillator(), g2=ctx.createGain();
+  o2.connect(g2); g2.connect(ctx.destination);
+  o2.frequency.value=2093; // C7 — octave atas
+  o2.type="sine";
+  g2.gain.setValueAtTime(0, ctx.currentTime);
+  g2.gain.linearRampToValueAtTime(0.3, ctx.currentTime+0.03);
+  g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+2.5);
+  o2.start(ctx.currentTime); o2.stop(ctx.currentTime+2.5);
+
+  // Harmonic ketiga — depth
+  const o3=ctx.createOscillator(), g3=ctx.createGain();
+  o3.connect(g3); g3.connect(ctx.destination);
+  o3.frequency.value=523; // C5 — bass sikit
+  o3.type="sine";
+  g3.gain.setValueAtTime(0, ctx.currentTime);
+  g3.gain.linearRampToValueAtTime(0.4, ctx.currentTime+0.05);
+  g3.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+3.0);
+  o3.start(ctx.currentTime); o3.stop(ctx.currentTime+3.0);
 }
 
 function AnalogClock({ now }) {
@@ -286,7 +300,7 @@ export default function WaktuSolat() {
     prayerList.forEach(p=>{
       if(!p.sec) return;
       const diff=p.sec-ns;
-      if(diff>=1&&diff<=60){
+      if(diff>=1&&diff<=10){
         const k=`${zone}_${p.key}_beep_${diff}_${now.toDateString()}`;
         if(!firedRef.current[k]){ firedRef.current[k]=true; beepTick(audioRef.current); }
       }
