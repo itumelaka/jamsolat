@@ -570,6 +570,15 @@ export default function WaktuSolat() {
   const audioRef = useRef(null);
   const firedRef = useRef({});
 
+  const initAudio = useCallback(() => {
+    if(!audioRef.current) {
+      audioRef.current = new (window.AudioContext||window.webkitAudioContext)();
+      setAudioReady(true);
+    } else if(audioRef.current.state==="suspended") {
+      audioRef.current.resume().then(()=>setAudioReady(true));
+    }
+  }, []);
+
   useEffect(() => { const t=setInterval(()=>setNow(new Date()),1000); return()=>clearInterval(t); }, []);
 
   // Auto-init audio on first user interaction
@@ -607,7 +616,6 @@ export default function WaktuSolat() {
     const year = now.getFullYear();
 
     try {
-      // Guna Vercel API route sendiri sebagai proxy
       const res = await fetch(`/api/solat?zon=${zonCode}&month=${month}&year=${year}`);
       if (!res.ok) throw new Error("API error");
       const json = await res.json();
@@ -650,14 +658,6 @@ export default function WaktuSolat() {
       firedRef.current = {};
     }
   }, [negeri, daerah, fetchPrayerData]);
-  const initAudio = useCallback(() => {
-    if(!audioRef.current) {
-      audioRef.current = new (window.AudioContext||window.webkitAudioContext)();
-      setAudioReady(true);
-    } else if(audioRef.current.state==="suspended") {
-      audioRef.current.resume().then(()=>setAudioReady(true));
-    }
-  }, []);
 
   const daerahList = DAERAH_DB[negeri] || [];
   const daerahData = daerahList.find(d => d.daerah === daerah) || daerahList[0] || { zon:"WLY01", lat:3.139, lng:101.687 };
@@ -679,7 +679,8 @@ export default function WaktuSolat() {
 
   // Auto dark mode — Maghrib hingga Subuh
   const maghribSec = data.maghrib ? toSec(data.maghrib) : 0;
-  const fajrSec = data.fajr ? toSec(data.fajr) : 0;  const isDark = ns >= maghribSec || ns < fajrSec;
+  const fajrSec = data.fajr ? toSec(data.fajr) : 0;
+  const isDark = ns >= maghribSec || ns < fajrSec;
 
   // Theme colors
   const T = {
