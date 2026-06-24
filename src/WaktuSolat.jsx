@@ -75,16 +75,24 @@ function beepTick(ctx) {
 
 function beepAdhan(ctx) {
   if(!ctx) return;
-  [0,0.55,1.1].forEach(t=>{
+  // Nada melodik kuat — 5 note ascending
+  const notes=[
+    {f:523,t:0.0,d:0.5},
+    {f:587,t:0.55,d:0.5},
+    {f:659,t:1.1,d:0.5},
+    {f:587,t:1.65,d:0.5},
+    {f:523,t:2.2,d:0.8},
+  ];
+  notes.forEach(({f,t,d})=>{
     const o=ctx.createOscillator(), g=ctx.createGain();
     o.connect(g); g.connect(ctx.destination);
-    o.frequency.value=880; o.type="square";
+    o.frequency.value=f; o.type="triangle";
     const st=ctx.currentTime+t;
     g.gain.setValueAtTime(0,st);
-    g.gain.linearRampToValueAtTime(0.35,st+0.03);
-    g.gain.setValueAtTime(0.35,st+0.28);
-    g.gain.exponentialRampToValueAtTime(0.001,st+0.42);
-    o.start(st); o.stop(st+0.45);
+    g.gain.linearRampToValueAtTime(0.8,st+0.05);
+    g.gain.setValueAtTime(0.8,st+d-0.08);
+    g.gain.exponentialRampToValueAtTime(0.001,st+d);
+    o.start(st); o.stop(st+d+0.05);
   });
 }
 
@@ -366,7 +374,7 @@ export default function WaktuSolat() {
       </div>
 
       {/* ── HADITH + KIBLAT ── */}
-      <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":`1fr ${isMobile?"":"300px"}`, gap:12, padding:"0 24px 16px" }}>
+      <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr", gap:12, padding:"0 24px 16px" }}>
 
         {/* Hadith */}
         <div style={{ background:"#fff", borderRadius:14, border:`1.5px solid #e8e5de`, padding:"20px 24px", textAlign:"center", transition:"opacity 0.5s", opacity:hadithFade?1:0 }}>
