@@ -198,7 +198,7 @@ export default function WaktuSolat() {
         }}/>
 
         <div style={{ fontSize:11, letterSpacing:5, color:"#c4a459", textTransform:"uppercase", marginBottom:4 }}>
-          Waktu Solat Malaysia
+          Jam Solat Institut Teknologi Unggas
         </div>
         <div style={{
           fontSize:48, fontWeight:300, letterSpacing:2,
