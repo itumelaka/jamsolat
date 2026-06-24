@@ -255,13 +255,26 @@ const PRAYERS = [
 
 const HADITH = [
   { arab:"إِنَّ الصَّلاَةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَاباً مَّوْقُوتاً", ms:"Sesungguhnya solat itu adalah kewajipan yang telah ditentukan waktunya ke atas orang-orang yang beriman.", ref:"Al-Quran, An-Nisa' 4:103" },
-  { arab:"بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ", ms:"Islam dibina atas lima perkara — syahadah, mendirikan solat, menunaikan zakat, berpuasa Ramadan, dan menunaikan haji.", ref:"Hadith Riwayat Al-Bukhari & Muslim" },
-  { arab:"أَوَّلُ مَا يُحَاسَبُ بِهِ الْعَبْدُ يَوْمَ الْقِيَامَةِ صَلاَتُهُ", ms:"Amalan pertama yang akan dihisab daripada seorang hamba pada hari kiamat ialah solatnya.", ref:"Hadith Riwayat Abu Dawud & At-Tirmizi" },
-  { arab:"الصَّلَوَاتُ الْخَمْسُ كَفَّارَةٌ لِمَا بَيْنَهُنَّ", ms:"Solat lima waktu adalah penebus dosa di antara waktu-waktunya, selagi mana dosa-dosa besar dijauhi.", ref:"Hadith Riwayat Muslim" },
-  { arab:"مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهَرٍ جَارٍ", ms:"Perumpamaan solat lima waktu adalah seperti sungai yang mengalir di depan pintu rumah seseorang, dia mandi padanya lima kali sehari.", ref:"Hadith Riwayat Al-Bukhari & Muslim" },
-  { arab:"مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ", ms:"Sesiapa yang mengerjakan solat dua waktu yang dingin (Subuh dan Asar), nescaya dia akan masuk syurga.", ref:"Hadith Riwayat Al-Bukhari & Muslim" },
-  { arab:"صَلِّ قَائِماً فَإِنْ لَمْ تَسْتَطِعْ فَقَاعِداً", ms:"Solatlah dalam keadaan berdiri, jika tidak mampu maka duduklah, jika tidak mampu maka berbaringlah.", ref:"Hadith Riwayat Al-Bukhari" },
-  { arab:"لاَ تَزَالُ أُمَّتِي بِخَيْرٍ مَا حَافَظُوا عَلَى الصَّلَوَاتِ الْخَمْسِ", ms:"Umatku sentiasa berada dalam kebaikan selagi mana mereka menjaga solat lima waktu.", ref:"Hadith Riwayat Ibn Hibban" },
+  { arab:"بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ وَإِقَامِ الصَّلاَةِ وَإِيتَاءِ الزَّكَاةِ وَالْحَجِّ وَصَوْمِ رَمَضَانَ", ms:"Islam dibina atas lima perkara: syahadah tiada tuhan melainkan Allah dan Muhammad itu Rasul-Nya, mendirikan solat, menunaikan zakat, menunaikan haji, dan berpuasa pada bulan Ramadan.", ref:"Hadith Riwayat Al-Bukhari (no. 8) & Muslim (no. 16)" },
+  { arab:"أَوَّلُ مَا يُحَاسَبُ بِهِ الْعَبْدُ يَوْمَ الْقِيَامَةِ مِنْ عَمَلِهِ صَلاَتُهُ فَإِنْ صَلُحَتْ فَقَدْ أَفْلَحَ وَأَنْجَحَ", ms:"Amalan pertama yang akan dihisab daripada seorang hamba pada hari kiamat ialah solatnya. Jika solatnya baik, maka dia berjaya dan menang.", ref:"Hadith Riwayat At-Tirmizi (no. 413), An-Nasa'i & Ibn Majah — Sahih" },
+  { arab:"الصَّلَوَاتُ الْخَمْسُ وَالْجُمُعَةُ إِلَى الْجُمُعَةِ كَفَّارَةٌ لِمَا بَيْنَهُنَّ مَا لَمْ تُغْشَ الْكَبَائِرُ", ms:"Solat lima waktu dan Jumaat ke Jumaat adalah penghapus dosa di antara keduanya, selagi mana dosa-dosa besar dijauhi.", ref:"Hadith Riwayat Muslim (no. 233)" },
+  { arab:"مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهَرٍ غَمْرٍ عَلَى بَابِ أَحَدِكُمْ يَغْتَسِلُ مِنْهُ كُلَّ يَوْمٍ خَمْسَ مَرَّاتٍ", ms:"Perumpamaan solat lima waktu adalah seperti sungai yang dalam mengalir di depan pintu salah seorang antara kamu, dia mandi daripadanya setiap hari lima kali.", ref:"Hadith Riwayat Muslim (no. 668)" },
+  { arab:"مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ", ms:"Sesiapa yang mengerjakan solat dua waktu yang dingin (Subuh dan Asar), nescaya dia akan masuk syurga.", ref:"Hadith Riwayat Al-Bukhari (no. 574) & Muslim (no. 635)" },
+  { arab:"مَنْ حَافَظَ عَلَيْهَا كَانَتْ لَهُ نُورًا وَبُرْهَانًا وَنَجَاةً يَوْمَ الْقِيَامَةِ", ms:"Sesiapa yang menjaga solat, maka solat itu akan menjadi cahaya, bukti, dan penyelamat baginya pada hari kiamat.", ref:"Hadith Riwayat Ahmad (no. 6576) — Sahih" },
+  { arab:"صَلِّ قَائِمًا فَإِنْ لَمْ تَسْتَطِعْ فَقَاعِدًا فَإِنْ لَمْ تَسْتَطِعْ فَعَلَى جَنْبٍ", ms:"Solatlah dalam keadaan berdiri, jika tidak mampu maka duduklah, jika tidak mampu maka berbaringlah.", ref:"Hadith Riwayat Al-Bukhari (no. 1117)" },
+  { arab:"إِنَّ أَوَّلَ مَا يُحَاسَبُ النَّاسُ بِهِ يَوْمَ الْقِيَامَةِ مِنْ أَعْمَالِهِمُ الصَّلاَةُ", ms:"Sesungguhnya perkara pertama yang akan dihisab daripada manusia pada hari kiamat daripada amalan mereka ialah solat.", ref:"Hadith Riwayat An-Nasa'i (no. 463) — Sahih" },
+  { arab:"اجْعَلُوا آخِرَ صَلاَتِكُمْ بِاللَّيْلِ وِتْرًا", ms:"Jadikanlah solat terakhir kamu pada waktu malam itu solat witir.", ref:"Hadith Riwayat Al-Bukhari (no. 998) & Muslim (no. 751)" },
+  { arab:"الطُّهُورُ شَطْرُ الإِيمَانِ", ms:"Bersuci adalah sebahagian daripada iman.", ref:"Hadith Riwayat Muslim (no. 223)" },
+  { arab:"إِذَا قَامَ أَحَدُكُمْ إِلَى الصَّلاَةِ فَلاَ يَبْصُقَنَّ قِبَلَ وَجْهِهِ فَإِنَّ اللهَ قِبَلَ وَجْهِهِ إِذَا صَلَّى", ms:"Apabila seseorang kamu berdiri untuk solat, janganlah dia meludah ke hadapannya, kerana Allah berada di hadapannya ketika dia solat.", ref:"Hadith Riwayat Al-Bukhari (no. 406) & Muslim (no. 547)" },
+  { arab:"مَنْ تَرَكَ صَلاَةَ الْعَصْرِ فَقَدْ حَبِطَ عَمَلُهُ", ms:"Sesiapa yang meninggalkan solat Asar, maka terhapuslah amalannya.", ref:"Hadith Riwayat Al-Bukhari (no. 553)" },
+  { arab:"بَيْنَ الرَّجُلِ وَبَيْنَ الشِّرْكِ وَالْكُفْرِ تَرْكُ الصَّلاَةِ", ms:"Antara seseorang dengan syirik dan kufur ialah meninggalkan solat.", ref:"Hadith Riwayat Muslim (no. 82)" },
+  { arab:"الصَّلاَةُ عِمَادُ الدِّينِ فَمَنْ أَقَامَهَا فَقَدْ أَقَامَ الدِّينَ وَمَنْ تَرَكَهَا فَقَدْ هَدَمَ الدِّينَ", ms:"Solat adalah tiang agama. Sesiapa yang mendirikannya maka dia telah mendirikan agama, dan sesiapa yang meninggalkannya maka dia telah meruntuhkan agama.", ref:"Hadith Riwayat Al-Baihaqi — Hasan" },
+  { arab:"خَيْرُ صُفُوفِ الرِّجَالِ أَوَّلُهَا وَشَرُّهَا آخِرُهَا", ms:"Sebaik-baik saf lelaki adalah yang pertama, dan seburuk-buruknya ialah yang terakhir.", ref:"Hadith Riwayat Muslim (no. 440)" },
+  { arab:"صَلُّوا كَمَا رَأَيْتُمُونِي أُصَلِّي", ms:"Solatlah kamu sebagaimana kamu melihat aku solat.", ref:"Hadith Riwayat Al-Bukhari (no. 631)" },
+  { arab:"مَنْ صَلَّى الْفَجْرَ فَهُوَ فِي ذِمَّةِ اللهِ", ms:"Sesiapa yang solat Subuh maka dia berada dalam jaminan perlindungan Allah.", ref:"Hadith Riwayat Muslim (no. 657)" },
+  { arab:"لَوْ يَعْلَمُ النَّاسُ مَا فِي النِّدَاءِ وَالصَّفِّ الأَوَّلِ ثُمَّ لَمْ يَجِدُوا إِلاَّ أَنْ يَسْتَهِمُوا عَلَيْهِ لاَسْتَهَمُوا", ms:"Seandainya manusia mengetahui apa yang terdapat pada azan dan saf pertama, kemudian tiada cara untuk mendapatkannya melainkan dengan membuat undian, nescaya mereka akan berundi.", ref:"Hadith Riwayat Al-Bukhari (no. 615) & Muslim (no. 437)" },
+  { arab:"أَقِمِ الصَّلاَةَ لِدُلُوكِ الشَّمْسِ إِلَى غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُودًا", ms:"Dirikanlah solat sejak matahari tergelincir hingga gelap malam dan (dirikanlah pula solat) Subuh. Sesungguhnya solat Subuh itu disaksikan (oleh para malaikat).", ref:"Al-Quran, Al-Isra' 17:78" },
+  { arab:"وَأَقِمِ الصَّلاَةَ إِنَّ الصَّلاَةَ تَنْهَى عَنِ الْفَحْشَاءِ وَالْمُنكَرِ", ms:"Dan dirikanlah solat. Sesungguhnya solat itu mencegah daripada perbuatan keji dan mungkar.", ref:"Al-Quran, Al-Ankabut 29:45" },
 ];
 
 function toSec(t) { const [h,m]=t.split(":").map(Number); return h*3600+m*60; }
@@ -321,65 +334,6 @@ function beepAdhan(ctx) {
   g3.gain.linearRampToValueAtTime(0.4, ctx.currentTime+0.05);
   g3.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+3.0);
   o3.start(ctx.currentTime); o3.stop(ctx.currentTime+3.0);
-}
-
-function AnalogClock({ now }) {
-  const canvasRef = useRef(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if(!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const cx=90, cy=90, r=84;
-    const h=now.getHours()%12+now.getMinutes()/60+now.getSeconds()/3600;
-    const m=now.getMinutes()+now.getSeconds()/60;
-    const s=now.getSeconds();
-    ctx.clearRect(0,0,180,180);
-
-    // Face
-    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-    ctx.strokeStyle="#1a6b3c"; ctx.lineWidth=3; ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx,cy,r-2,0,Math.PI*2);
-    ctx.fillStyle="#ffffff"; ctx.fill();
-
-    // Markers
-    for(let i=0;i<60;i++){
-      const ang=(i/60)*Math.PI*2-Math.PI/2, isH=i%5===0;
-      ctx.beginPath();
-      ctx.moveTo(cx+Math.cos(ang)*(r-4),cy+Math.sin(ang)*(r-4));
-      ctx.lineTo(cx+Math.cos(ang)*(r-(isH?16:8)),cy+Math.sin(ang)*(r-(isH?16:8)));
-      ctx.strokeStyle=isH?"#1a6b3c":"#ccc";
-      ctx.lineWidth=isH?2.5:1; ctx.stroke();
-    }
-
-    // Numbers
-    ctx.font="bold 11px sans-serif"; ctx.fillStyle="#1a6b3c";
-    ctx.textAlign="center"; ctx.textBaseline="middle";
-    [{n:12,i:0},{n:3,i:1},{n:6,i:2},{n:9,i:3}].forEach(({n,i})=>{
-      const ang=(i/4)*Math.PI*2-Math.PI/2;
-      ctx.fillText(n, cx+Math.cos(ang)*64, cy+Math.sin(ang)*64);
-    });
-
-    // Hour hand
-    const hA=(h/12)*Math.PI*2-Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(hA)*48,cy+Math.sin(hA)*48);
-    ctx.strokeStyle="#1a1a1a"; ctx.lineWidth=5; ctx.lineCap="round"; ctx.stroke();
-
-    // Minute hand
-    const mA=(m/60)*Math.PI*2-Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(mA)*68,cy+Math.sin(mA)*68);
-    ctx.strokeStyle="#1a6b3c"; ctx.lineWidth=3; ctx.lineCap="round"; ctx.stroke();
-
-    // Second hand
-    const sA=(s/60)*Math.PI*2-Math.PI/2;
-    ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(sA+Math.PI)*14,cy+Math.sin(sA+Math.PI)*14);
-    ctx.lineTo(cx+Math.cos(sA)*74,cy+Math.sin(sA)*74);
-    ctx.strokeStyle="#e63946"; ctx.lineWidth=1.5; ctx.lineCap="round"; ctx.stroke();
-
-    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2); ctx.fillStyle="#1a6b3c"; ctx.fill();
-    ctx.beginPath(); ctx.arc(cx,cy,2.5,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
-  }, [now]);
-  return <canvas ref={canvasRef} width={180} height={180} />;
 }
 
 
@@ -584,16 +538,16 @@ function Chicken({ type, size, speed, startX, startY }) {
 
 function ChickenFarm() {
   const chickens = [
-    { id:1,  type:"jantan",   size:58, speed:1.2, startX:100, startY:80  },
-    { id:2,  type:"jantan",   size:52, speed:0.8, startX:500, startY:200 },
-    { id:3,  type:"betina",   size:46, speed:1.0, startX:300, startY:150 },
-    { id:4,  type:"betina",   size:44, speed:1.3, startX:700, startY:300 },
-    { id:5,  type:"pedaging", size:62, speed:0.5, startX:200, startY:400 },
-    { id:6,  type:"penelur",  size:42, speed:1.5, startX:600, startY:100 },
-    { id:7,  type:"puyuh",    size:32, speed:2.2, startX:400, startY:250 },
-    { id:8,  type:"puyuh",    size:30, speed:2.0, startX:800, startY:350 },
-    { id:9,  type:"anak",     size:34, speed:1.8, startX:150, startY:320 },
-    { id:10, type:"anak",     size:32, speed:1.9, startX:650, startY:180 },
+    { id:1,  type:"jantan",   size:80, speed:1.2, startX:100, startY:80  },
+    { id:2,  type:"jantan",   size:72, speed:0.8, startX:500, startY:200 },
+    { id:3,  type:"betina",   size:65, speed:1.0, startX:300, startY:150 },
+    { id:4,  type:"betina",   size:62, speed:1.3, startX:700, startY:300 },
+    { id:5,  type:"pedaging", size:90, speed:0.5, startX:200, startY:400 },
+    { id:6,  type:"penelur",  size:60, speed:1.5, startX:600, startY:100 },
+    { id:7,  type:"puyuh",    size:48, speed:2.2, startX:400, startY:250 },
+    { id:8,  type:"puyuh",    size:44, speed:2.0, startX:800, startY:350 },
+    { id:9,  type:"anak",     size:50, speed:1.8, startX:150, startY:320 },
+    { id:10, type:"anak",     size:46, speed:1.9, startX:650, startY:180 },
   ];
   return (
     <>
@@ -755,34 +709,35 @@ export default function WaktuSolat() {
     <div onClick={initAudio} style={{ minHeight:"100vh", background:T.bg, fontFamily:"'Segoe UI',system-ui,sans-serif", color:T.text, transition:"background 1s ease, color 1s ease" }}>
 
       {/* ── HEADER ── */}
-      <div style={{ background:T.bgHeader, borderBottom:`3px solid ${G}`, padding:"12px 24px", display:"flex", alignItems:"center", gap:16, transition:"background 1s ease" }}>
-        <img src="/icon-512.png" alt="Logo" style={{ width:64, height:64, objectFit:"contain" }} />
+      <div style={{ background:T.bgHeader, borderBottom:`3px solid ${G}`, padding:"14px 28px", display:"flex", alignItems:"center", gap:20, transition:"background 1s ease" }}>
+
+        {/* Logo besar */}
+        <img src="/icon-512.png" alt="Logo" style={{ width:90, height:90, objectFit:"contain" }} />
+
+        {/* Nama institusi */}
         <div style={{ flex:1 }}>
-          <div style={{ fontSize:11, letterSpacing:3, color:G, textTransform:"uppercase", fontWeight:700 }}>
+          <div style={{ fontSize:13, letterSpacing:3, color:G, textTransform:"uppercase", fontWeight:700 }}>
             Jam Solat Surau · Institut Teknologi Unggas
           </div>
-          <div style={{ fontSize:13, color:T.textMid, marginTop:3 }}>{dateStr}</div>
-          <div style={{ fontSize:10, marginTop:2 }}>
-            {apiStatus==="loading" && <span style={{ color:T.warn }}>⏳ Memuatkan waktu solat...</span>}
-            {apiStatus==="ok"      && <span style={{ color:G }}>✅ Data live JAKIM</span>}
-            {apiStatus==="error"   && <span style={{ color:"#e63946" }}>⚠️ Guna data anggaran</span>}
+          <div style={{ fontSize:14, color:T.textMid, marginTop:4 }}>{dateStr}</div>
+          <div style={{ fontSize:11, marginTop:3 }}>
+            {apiStatus==="loading" && <span style={{ color:T.warn }}>⏳ Memuatkan data waktu solat...</span>}
+            {apiStatus==="ok"      && <span style={{ color:G }}>✅ Data live dari JAKIM</span>}
+            {apiStatus==="error"   && <span style={{ color:"#e63946" }}>⚠️ Guna data anggaran — semak sambungan internet</span>}
           </div>
         </div>
 
-        {/* Analog + Digital */}
-        <div style={{ display:"flex", alignItems:"center", gap:16 }}>
-          <AnalogClock now={now} />
-          <div style={{ textAlign:"right" }}>
-            <div style={{ fontSize:44, fontWeight:300, fontFamily:"'Courier New',monospace", color:isAdhan?T.danger:isWarning?T.warn:T.text, lineHeight:1 }}>{timeStr}</div>
-            {nextPrayer && (
-              <div style={{ marginTop:6, padding:"6px 12px", borderRadius:8, background:isWarning?T.warnBg:isAdhan?"rgba(248,81,73,0.1)":T.greenBg, border:`1px solid ${isWarning?T.warn:isAdhan?T.danger:G}`, textAlign:"right" }}>
-                <div style={{ fontSize:10, color:T.textMid, letterSpacing:1, textTransform:"uppercase" }}>Waktu Seterusnya</div>
-                <div style={{ fontSize:16, fontWeight:700, color:isWarning?T.warn:isAdhan?T.danger:G }}>{nextPrayer.icon} {nextPrayer.label} · {nextPrayer.time}</div>
-                <div style={{ fontSize:22, fontWeight:700, fontFamily:"'Courier New',monospace", color:isWarning?T.warn:isAdhan?T.danger:G }}>{fmt(nextDiff)}</div>
-                {isAdhan && <div style={{ fontSize:11, fontWeight:700, color:T.danger }}>🕌 MASUK WAKTU SEKARANG!</div>}
-              </div>
-            )}
-          </div>
+        {/* Jam digital besar + next prayer */}
+        <div style={{ textAlign:"center" }}>
+          <div style={{ fontSize:64, fontWeight:200, fontFamily:"'Courier New',monospace", color:isAdhan?T.danger:isWarning?T.warn:T.text, lineHeight:1, letterSpacing:2 }}>{timeStr}</div>
+          {nextPrayer && (
+            <div style={{ marginTop:8, padding:"8px 16px", borderRadius:10, background:isWarning?T.warnBg:isAdhan?"rgba(248,81,73,0.1)":T.greenBg, border:`1px solid ${isWarning?T.warn:isAdhan?T.danger:G}`, textAlign:"center" }}>
+              <div style={{ fontSize:11, color:T.textMid, letterSpacing:1, textTransform:"uppercase" }}>Waktu Seterusnya</div>
+              <div style={{ fontSize:18, fontWeight:700, color:isWarning?T.warn:isAdhan?T.danger:G, marginTop:2 }}>{nextPrayer.icon} {nextPrayer.label} · {nextPrayer.time}</div>
+              <div style={{ fontSize:26, fontWeight:700, fontFamily:"'Courier New',monospace", color:isWarning?T.warn:isAdhan?T.danger:G }}>{fmt(nextDiff)}</div>
+              {isAdhan && <div style={{ fontSize:13, fontWeight:700, color:T.danger }}>🕌 MASUK WAKTU SEKARANG!</div>}
+            </div>
+          )}
         </div>
 
         {/* Negeri + Daerah picker */}
