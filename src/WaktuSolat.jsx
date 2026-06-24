@@ -1,23 +1,23 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const PRAYER_DB = {
-  WLY01: { label: "Kuala Lumpur / Putrajaya",    fajr:"06:02", syuruk:"07:10", dhuhr:"13:20", asr:"16:33", maghrib:"19:25", isha:"20:36" },
-  SGR01: { label: "Selangor – Petaling / Shah Alam", fajr:"06:01", syuruk:"07:09", dhuhr:"13:19", asr:"16:32", maghrib:"19:24", isha:"20:35" },
-  SGR02: { label: "Selangor – Kuala Selangor",   fajr:"06:03", syuruk:"07:11", dhuhr:"13:21", asr:"16:34", maghrib:"19:26", isha:"20:37" },
-  SGR03: { label: "Selangor – Klang / Kuala Langat", fajr:"06:00", syuruk:"07:08", dhuhr:"13:18", asr:"16:31", maghrib:"19:23", isha:"20:34" },
-  JHR02: { label: "Johor Bahru",                  fajr:"05:59", syuruk:"07:08", dhuhr:"13:14", asr:"16:30", maghrib:"19:21", isha:"20:32" },
-  JHR03: { label: "Johor – Kluang / Pontian",    fajr:"05:58", syuruk:"07:07", dhuhr:"13:13", asr:"16:29", maghrib:"19:20", isha:"20:31" },
-  MLK01: { label: "Melaka",                       fajr:"06:00", syuruk:"07:09", dhuhr:"13:16", asr:"16:31", maghrib:"19:22", isha:"20:33" },
-  NGS03: { label: "Seremban / Port Dickson",      fajr:"06:01", syuruk:"07:10", dhuhr:"13:17", asr:"16:32", maghrib:"19:23", isha:"20:34" },
-  PNG01: { label: "Pulau Pinang",                 fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
-  KDH01: { label: "Kedah – Kota Setar",           fajr:"06:07", syuruk:"07:16", dhuhr:"13:25", asr:"16:39", maghrib:"19:31", isha:"20:42" },
-  PRK02: { label: "Perak – Ipoh",                 fajr:"06:04", syuruk:"07:13", dhuhr:"13:22", asr:"16:36", maghrib:"19:28", isha:"20:39" },
-  KTN01: { label: "Kelantan – Kota Bharu",        fajr:"06:04", syuruk:"07:14", dhuhr:"13:22", asr:"16:37", maghrib:"19:28", isha:"20:39" },
-  TRG01: { label: "Terengganu – Kuala Terengganu",fajr:"06:03", syuruk:"07:13", dhuhr:"13:21", asr:"16:36", maghrib:"19:27", isha:"20:38" },
-  PHG02: { label: "Pahang – Kuantan",             fajr:"06:02", syuruk:"07:12", dhuhr:"13:20", asr:"16:34", maghrib:"19:26", isha:"20:37" },
-  SBH07: { label: "Sabah – Kota Kinabalu",        fajr:"05:38", syuruk:"06:48", dhuhr:"12:56", asr:"16:09", maghrib:"19:00", isha:"20:11" },
-  SWK08: { label: "Sarawak – Kuching",            fajr:"05:42", syuruk:"06:52", dhuhr:"12:59", asr:"16:13", maghrib:"19:03", isha:"20:14" },
-  PLS01: { label: "Perlis",                       fajr:"06:09", syuruk:"07:18", dhuhr:"13:27", asr:"16:41", maghrib:"19:33", isha:"20:44" },
+  WLY01: { label: "Kuala Lumpur / Putrajaya",    lat:3.1390, lng:101.6869, fajr:"06:02", syuruk:"07:10", dhuhr:"13:20", asr:"16:33", maghrib:"19:25", isha:"20:36" },
+  SGR01: { label: "Selangor – Petaling / Shah Alam", lat:3.0738, lng:101.5183, fajr:"06:01", syuruk:"07:09", dhuhr:"13:19", asr:"16:32", maghrib:"19:24", isha:"20:35" },
+  SGR02: { label: "Selangor – Kuala Selangor",   lat:3.3408, lng:101.2567, fajr:"06:03", syuruk:"07:11", dhuhr:"13:21", asr:"16:34", maghrib:"19:26", isha:"20:37" },
+  SGR03: { label: "Selangor – Klang / Kuala Langat", lat:3.0449, lng:101.4455, fajr:"06:00", syuruk:"07:08", dhuhr:"13:18", asr:"16:31", maghrib:"19:23", isha:"20:34" },
+  JHR02: { label: "Johor Bahru",                  lat:1.4927, lng:103.7414, fajr:"05:59", syuruk:"07:08", dhuhr:"13:14", asr:"16:30", maghrib:"19:21", isha:"20:32" },
+  JHR03: { label: "Johor – Kluang / Pontian",    lat:1.8578, lng:103.3278, fajr:"05:58", syuruk:"07:07", dhuhr:"13:13", asr:"16:29", maghrib:"19:20", isha:"20:31" },
+  MLK01: { label: "Melaka",                       lat:2.1896, lng:102.2501, fajr:"06:00", syuruk:"07:09", dhuhr:"13:16", asr:"16:31", maghrib:"19:22", isha:"20:33" },
+  NGS03: { label: "Seremban / Port Dickson",      lat:2.7297, lng:101.9381, fajr:"06:01", syuruk:"07:10", dhuhr:"13:17", asr:"16:32", maghrib:"19:23", isha:"20:34" },
+  PNG01: { label: "Pulau Pinang",                 lat:5.4141, lng:100.3288, fajr:"06:06", syuruk:"07:15", dhuhr:"13:24", asr:"16:38", maghrib:"19:30", isha:"20:41" },
+  KDH01: { label: "Kedah – Kota Setar",           lat:6.1184, lng:100.3685, fajr:"06:07", syuruk:"07:16", dhuhr:"13:25", asr:"16:39", maghrib:"19:31", isha:"20:42" },
+  PRK02: { label: "Perak – Ipoh",                 lat:4.5975, lng:101.0901, fajr:"06:04", syuruk:"07:13", dhuhr:"13:22", asr:"16:36", maghrib:"19:28", isha:"20:39" },
+  KTN01: { label: "Kelantan – Kota Bharu",        lat:6.1254, lng:102.2381, fajr:"06:04", syuruk:"07:14", dhuhr:"13:22", asr:"16:37", maghrib:"19:28", isha:"20:39" },
+  TRG01: { label: "Terengganu – Kuala Terengganu",lat:5.3296, lng:103.1370, fajr:"06:03", syuruk:"07:13", dhuhr:"13:21", asr:"16:36", maghrib:"19:27", isha:"20:38" },
+  PHG02: { label: "Pahang – Kuantan",             lat:3.8077, lng:103.3260, fajr:"06:02", syuruk:"07:12", dhuhr:"13:20", asr:"16:34", maghrib:"19:26", isha:"20:37" },
+  SBH07: { label: "Sabah – Kota Kinabalu",        lat:5.9804, lng:116.0735, fajr:"05:38", syuruk:"06:48", dhuhr:"12:56", asr:"16:09", maghrib:"19:00", isha:"20:11" },
+  SWK08: { label: "Sarawak – Kuching",            lat:1.5533, lng:110.3592, fajr:"05:42", syuruk:"06:52", dhuhr:"12:59", asr:"16:13", maghrib:"19:03", isha:"20:14" },
+  PLS01: { label: "Perlis",                       lat:6.4449, lng:100.1986, fajr:"06:09", syuruk:"07:18", dhuhr:"13:27", asr:"16:41", maghrib:"19:33", isha:"20:44" },
 };
 
 const PRAYERS = [
@@ -39,7 +39,21 @@ const HADITH = [
   { arab: "لاَ تَزَالُ أُمَّتِي بِخَيْرٍ مَا حَافَظُوا عَلَى الصَّلَوَاتِ الْخَمْسِ", ms: "Umatku sentiasa berada dalam kebaikan selagi mana mereka menjaga solat lima waktu.", ref: "Hadith Riwayat Ibn Hibban" },
 ];
 
-function toSeconds(t) { const [h,m] = t.split(":").map(Number); return h*3600+m*60; }
+// Koordinat Kaabah
+const KAABAH = { lat: 21.4225, lng: 39.8262 };
+
+function kiblatBearing(lat, lng) {
+  const toRad = d => d * Math.PI / 180;
+  const toDeg = r => r * 180 / Math.PI;
+  const dLng = toRad(KAABAH.lng - lng);
+  const lat1 = toRad(lat);
+  const lat2 = toRad(KAABAH.lat);
+  const y = Math.sin(dLng) * Math.cos(lat2);
+  const x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLng);
+  return (toDeg(Math.atan2(y, x)) + 360) % 360;
+}
+
+function toSeconds(t) { const [h,m]=t.split(":").map(Number); return h*3600+m*60; }
 function nowSec() { const n=new Date(); return n.getHours()*3600+n.getMinutes()*60+n.getSeconds(); }
 function fmt(sec) {
   if(sec<=0) return "—";
@@ -62,7 +76,6 @@ function beepTick(ctx) {
 
 function beepAdhan(ctx) {
   if(!ctx) return;
-  // 3 beep serius — pendek, tegas, selang 0.5 saat
   [0, 0.55, 1.1].forEach(t => {
     const o=ctx.createOscillator(), g=ctx.createGain();
     o.connect(g); g.connect(ctx.destination);
@@ -76,73 +89,129 @@ function beepAdhan(ctx) {
   });
 }
 
-// Analog clock component
 function AnalogClock({ now }) {
   const canvasRef = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
     if(!canvas) return;
     const ctx = canvas.getContext("2d");
-    const cx=110, cy=110, r=100;
-    const h = now.getHours()%12 + now.getMinutes()/60 + now.getSeconds()/3600;
-    const m = now.getMinutes() + now.getSeconds()/60;
-    const s = now.getSeconds();
-
-    ctx.clearRect(0,0,220,220);
-
-    // Outer glow ring
+    const cx=100, cy=100, r=92;
+    const h=now.getHours()%12+now.getMinutes()/60+now.getSeconds()/3600;
+    const m=now.getMinutes()+now.getSeconds()/60;
+    const s=now.getSeconds();
+    ctx.clearRect(0,0,200,200);
     ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
     ctx.strokeStyle="rgba(196,164,89,0.5)"; ctx.lineWidth=2; ctx.stroke();
-
-    // Face
     ctx.beginPath(); ctx.arc(cx,cy,r-2,0,Math.PI*2);
     ctx.fillStyle="#0b1e35"; ctx.fill();
-
-    // Minute markers
     for(let i=0;i<60;i++){
-      const ang=(i/60)*Math.PI*2-Math.PI/2;
-      const isHour=i%5===0;
+      const ang=(i/60)*Math.PI*2-Math.PI/2, isH=i%5===0;
       ctx.beginPath();
-      ctx.moveTo(cx+Math.cos(ang)*(r-10), cy+Math.sin(ang)*(r-10));
-      ctx.lineTo(cx+Math.cos(ang)*(r-(isHour?20:14)), cy+Math.sin(ang)*(r-(isHour?20:14)));
-      ctx.strokeStyle=isHour?"rgba(196,164,89,0.9)":"rgba(196,164,89,0.3)";
-      ctx.lineWidth=isHour?2.5:1;
-      ctx.stroke();
+      ctx.moveTo(cx+Math.cos(ang)*(r-8),cy+Math.sin(ang)*(r-8));
+      ctx.lineTo(cx+Math.cos(ang)*(r-(isH?18:12)),cy+Math.sin(ang)*(r-(isH?18:12)));
+      ctx.strokeStyle=isH?"rgba(196,164,89,0.9)":"rgba(196,164,89,0.3)";
+      ctx.lineWidth=isH?2.5:1; ctx.stroke();
     }
-
-    // Hour numbers
-    ctx.font="bold 11px 'Courier New'";
-    ctx.fillStyle="rgba(196,164,89,0.7)";
+    ctx.font="bold 10px 'Courier New'"; ctx.fillStyle="rgba(196,164,89,0.7)";
     ctx.textAlign="center"; ctx.textBaseline="middle";
-    [12,3,6,9].forEach((n,i)=>{
+    [{n:12,i:0},{n:3,i:1},{n:6,i:2},{n:9,i:3}].forEach(({n,i})=>{
       const ang=(i/4)*Math.PI*2-Math.PI/2;
-      ctx.fillText(n, cx+Math.cos(ang)*76, cy+Math.sin(ang)*76);
+      ctx.fillText(n,cx+Math.cos(ang)*70,cy+Math.sin(ang)*70);
+    });
+    const hA=(h/12)*Math.PI*2-Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(hA)*50,cy+Math.sin(hA)*50);
+    ctx.strokeStyle="#f0e6c8"; ctx.lineWidth=5; ctx.lineCap="round"; ctx.stroke();
+    const mA=(m/60)*Math.PI*2-Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(mA)*70,cy+Math.sin(mA)*70);
+    ctx.strokeStyle="#c4a459"; ctx.lineWidth=3; ctx.lineCap="round"; ctx.stroke();
+    const sA=(s/60)*Math.PI*2-Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(sA+Math.PI)*16,cy+Math.sin(sA+Math.PI)*16);
+    ctx.lineTo(cx+Math.cos(sA)*78,cy+Math.sin(sA)*78);
+    ctx.strokeStyle="#ff8c69"; ctx.lineWidth=1.5; ctx.lineCap="round"; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2); ctx.fillStyle="#c4a459"; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,2,0,Math.PI*2); ctx.fillStyle="#ff8c69"; ctx.fill();
+  }, [now]);
+  return <canvas ref={canvasRef} width={200} height={200} />;
+}
+
+function KiblatCompass({ bearing, deviceHeading }) {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if(!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const cx=90, cy=90, r=80;
+    ctx.clearRect(0,0,180,180);
+
+    // Rotate kompas ikut device heading
+    const rotation = deviceHeading !== null ? -deviceHeading : 0;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation * Math.PI / 180);
+    ctx.translate(-cx, -cy);
+
+    // Outer ring
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle="rgba(196,164,89,0.4)"; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,r-1,0,Math.PI*2);
+    ctx.fillStyle="#0b1e35"; ctx.fill();
+
+    // Cardinal markers
+    const cardinals = [{l:"U",a:-90},{l:"T",a:0},{l:"S",a:90},{l:"B",a:180}];
+    cardinals.forEach(({l,a})=>{
+      const ang=a*Math.PI/180;
+      ctx.font=`bold ${l==="U"?"13":"10"}px sans-serif`;
+      ctx.fillStyle=l==="U"?"#ff8c69":"rgba(196,164,89,0.6)";
+      ctx.textAlign="center"; ctx.textBaseline="middle";
+      ctx.fillText(l, cx+Math.cos(ang)*(r-14), cy+Math.sin(ang)*(r-14));
     });
 
-    // Hour hand
-    const hA=(h/12)*Math.PI*2-Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(cx,cy);
-    ctx.lineTo(cx+Math.cos(hA)*55, cy+Math.sin(hA)*55);
-    ctx.strokeStyle="#f0e6c8"; ctx.lineWidth=5; ctx.lineCap="round"; ctx.stroke();
+    // Tick marks
+    for(let i=0;i<360;i+=10){
+      const ang=i*Math.PI/180-Math.PI/2;
+      const isMain=i%90===0, isMid=i%45===0;
+      ctx.beginPath();
+      ctx.moveTo(cx+Math.cos(ang)*(r-4),cy+Math.sin(ang)*(r-4));
+      ctx.lineTo(cx+Math.cos(ang)*(r-(isMain?14:isMid?10:7)),cy+Math.sin(ang)*(r-(isMain?14:isMid?10:7)));
+      ctx.strokeStyle=isMain?"rgba(196,164,89,0.8)":"rgba(196,164,89,0.3)";
+      ctx.lineWidth=isMain?2:1; ctx.stroke();
+    }
 
-    // Minute hand
-    const mA=(m/60)*Math.PI*2-Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(cx,cy);
-    ctx.lineTo(cx+Math.cos(mA)*76, cy+Math.sin(mA)*76);
-    ctx.strokeStyle="#c4a459"; ctx.lineWidth=3; ctx.lineCap="round"; ctx.stroke();
+    ctx.restore();
 
-    // Second hand
-    const sA=(s/60)*Math.PI*2-Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(cx+Math.cos(sA+Math.PI)*18, cy+Math.sin(sA+Math.PI)*18);
-    ctx.lineTo(cx+Math.cos(sA)*85, cy+Math.sin(sA)*85);
-    ctx.strokeStyle="#ff8c69"; ctx.lineWidth=1.5; ctx.lineCap="round"; ctx.stroke();
+    // Kiblat arrow — ikut bearing
+    const kiblatAng = (bearing - 90) * Math.PI / 180;
+    const arrowLen = r - 22;
 
-    // Centre
-    ctx.beginPath(); ctx.arc(cx,cy,6,0,Math.PI*2); ctx.fillStyle="#c4a459"; ctx.fill();
-    ctx.beginPath(); ctx.arc(cx,cy,2.5,0,Math.PI*2); ctx.fillStyle="#ff8c69"; ctx.fill();
-  }, [now]);
+    // Arrow body
+    ctx.beginPath();
+    ctx.moveTo(cx - Math.cos(kiblatAng)*15, cy - Math.sin(kiblatAng)*15);
+    ctx.lineTo(cx + Math.cos(kiblatAng)*arrowLen, cy + Math.sin(kiblatAng)*arrowLen);
+    ctx.strokeStyle="#4CAF50"; ctx.lineWidth=3; ctx.lineCap="round"; ctx.stroke();
 
-  return <canvas ref={canvasRef} width={220} height={220} />;
+    // Arrowhead
+    const tipX = cx + Math.cos(kiblatAng)*arrowLen;
+    const tipY = cy + Math.sin(kiblatAng)*arrowLen;
+    const perpAng = kiblatAng + Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(tipX, tipY);
+    ctx.lineTo(tipX - Math.cos(kiblatAng)*12 + Math.cos(perpAng)*6, tipY - Math.sin(kiblatAng)*12 + Math.sin(perpAng)*6);
+    ctx.lineTo(tipX - Math.cos(kiblatAng)*12 - Math.cos(perpAng)*6, tipY - Math.sin(kiblatAng)*12 - Math.sin(perpAng)*6);
+    ctx.closePath(); ctx.fillStyle="#4CAF50"; ctx.fill();
+
+    // Kaabah icon at tip
+    ctx.font="14px serif";
+    ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.fillText("🕋", tipX + Math.cos(kiblatAng)*10, tipY + Math.sin(kiblatAng)*10);
+
+    // Centre dot
+    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2); ctx.fillStyle="#c4a459"; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,2,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
+
+  }, [bearing, deviceHeading]);
+
+  return <canvas ref={canvasRef} width={180} height={180} />;
 }
 
 export default function WaktuSolat() {
@@ -153,16 +222,13 @@ export default function WaktuSolat() {
   const [log, setLog] = useState([]);
   const [showZones, setShowZones] = useState(false);
   const [hadithIdx, setHadithIdx] = useState(0);
+  const [deviceHeading, setDeviceHeading] = useState(null);
+  const [compassPermission, setCompassPermission] = useState("idle"); // idle | granted | denied
   const audioRef = useRef(null);
   const firedRef = useRef({});
 
   useEffect(() => { const t=setInterval(()=>setNow(new Date()),1000); return()=>clearInterval(t); }, []);
-
-  // Rotate hadith every 10 saat
-  useEffect(() => {
-    const t = setInterval(() => setHadithIdx(i=>(i+1)%HADITH.length), 10000);
-    return () => clearInterval(t);
-  }, []);
+  useEffect(() => { const t=setInterval(()=>setHadithIdx(i=>(i+1)%HADITH.length),10000); return()=>clearInterval(t); }, []);
 
   const initAudio = useCallback(() => {
     if(!audioRef.current) {
@@ -173,14 +239,45 @@ export default function WaktuSolat() {
     }
   }, []);
 
+  const requestCompass = useCallback(() => {
+    if(typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission().then(state => {
+        if(state === "granted") {
+          setCompassPermission("granted");
+          window.addEventListener("deviceorientation", handleOrientation);
+        } else {
+          setCompassPermission("denied");
+        }
+      });
+    } else {
+      setCompassPermission("granted");
+      window.addEventListener("deviceorientation", handleOrientation);
+    }
+  }, []);
+
+  const handleOrientation = useCallback((e) => {
+    if(e.webkitCompassHeading !== undefined) {
+      setDeviceHeading(e.webkitCompassHeading);
+    } else if(e.alpha !== null) {
+      setDeviceHeading(360 - e.alpha);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => window.removeEventListener("deviceorientation", handleOrientation);
+  }, []);
+
   const data = PRAYER_DB[zone];
+  const kiblat = kiblatBearing(data.lat, data.lng);
   const prayerList = PRAYERS.map(p=>({ ...p, time:data[p.key]||null, sec:data[p.key]?toSeconds(data[p.key]):null }));
   const ns = nowSec();
 
   let currentIdx=-1;
   for(let i=prayerList.length-1;i>=0;i--){ if(prayerList[i].sec<=ns){currentIdx=i;break;} }
-  const nextPrayer = prayerList.find(p=>p.sec>ns)||null;
-  const nextDiff = nextPrayer ? nextPrayer.sec-ns : null;
+  const nextPrayer=prayerList.find(p=>p.sec>ns)||null;
+  const nextDiff=nextPrayer?nextPrayer.sec-ns:null;
+  const isWarning=nextDiff!==null&&nextDiff<=60&&nextDiff>0;
+  const isAdhan=nextDiff!==null&&nextDiff<=3;
 
   useEffect(() => {
     if(!alarmOn) return;
@@ -204,42 +301,47 @@ export default function WaktuSolat() {
   const days=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
   const months=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
   const dateStr=`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-  const isWarning=nextDiff!==null&&nextDiff<=60&&nextDiff>0;
-  const isAdhan=nextDiff!==null&&nextDiff<=3;
-  const hadith=HADITH[hadithIdx];
 
-  // Build display list: prayer rows + hadith slots between them
   const displayItems = [];
-  prayerList.forEach((p, i) => {
-    displayItems.push({ type: "prayer", data: p });
-    if(i < prayerList.length - 1) {
-      displayItems.push({ type: "hadith", idx: i });
-    }
+  prayerList.forEach((p,i) => {
+    displayItems.push({ type:"prayer", data:p });
+    if(i < prayerList.length-1) displayItems.push({ type:"hadith", idx:i });
   });
 
   return (
     <div onClick={initAudio} style={{ minHeight:"100vh", margin:0, padding:0, background:"#0b1320", fontFamily:"'Segoe UI',system-ui,sans-serif", color:"#e2d9c5", userSelect:"none" }}>
 
       {/* ── HEADER ── */}
-      <div style={{ background:"linear-gradient(180deg,#112240 0%,#0b1320 100%)", borderBottom:"1px solid rgba(196,164,89,0.2)", padding:"16px 20px 12px", textAlign:"center", position:"relative" }}>
+      <div style={{ background:"linear-gradient(180deg,#112240 0%,#0b1320 100%)", borderBottom:"1px solid rgba(196,164,89,0.2)", padding:"16px 20px 14px", position:"relative" }}>
         <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", background:"linear-gradient(90deg,transparent,#c4a459,transparent)" }}/>
-        <div style={{ fontSize:10, letterSpacing:4, color:"#c4a459", textTransform:"uppercase", marginBottom:8 }}>Jam Solat Institut Teknologi Unggas</div>
 
-        {/* Analog + Digital side by side */}
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:20, flexWrap:"wrap" }}>
+        {/* Title */}
+        <div style={{ textAlign:"center", fontSize:10, letterSpacing:4, color:"#c4a459", textTransform:"uppercase", marginBottom:12 }}>
+          Jam Solat Institut Teknologi Unggas
+        </div>
+
+        {/* 3 sejajar: Logo | Jam Analog | Jam Digital */}
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:16, flexWrap:"wrap" }}>
+
+          {/* Logo */}
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
+            <img src="/icon-512.png" alt="Logo ITU" style={{ width:130, height:130, objectFit:"contain" }} />
+          </div>
+
+          {/* Jam Analog */}
           <AnalogClock now={now} />
-          <div style={{ textAlign:"center" }}>
-            <div style={{ fontSize:42, fontWeight:300, letterSpacing:3, color:isAdhan?"#ffb347":isWarning?"#ff8c69":"#f0e6c8", fontFamily:"'Courier New',monospace", lineHeight:1 }}>{timeStr}</div>
-            <div style={{ fontSize:13, color:"#8aaa7a", marginTop:6 }}>{dateStr}</div>
-            <div style={{ fontSize:11, color:"rgba(196,164,89,0.5)", marginTop:4 }}>Data: api.waktusolat.app · JAKIM</div>
 
-            {/* Next prayer countdown */}
+          {/* Jam Digital + Next Prayer */}
+          <div style={{ textAlign:"center", minWidth:200 }}>
+            <div style={{ fontSize:40, fontWeight:300, letterSpacing:3, color:isAdhan?"#ffb347":isWarning?"#ff8c69":"#f0e6c8", fontFamily:"'Courier New',monospace", lineHeight:1 }}>{timeStr}</div>
+            <div style={{ fontSize:13, color:"#8aaa7a", marginTop:5 }}>{dateStr}</div>
+            <div style={{ fontSize:10, color:"rgba(196,164,89,0.4)", marginTop:3 }}>Data: api.waktusolat.app · JAKIM</div>
             {nextPrayer && (
-              <div style={{ marginTop:10, padding:"8px 14px", borderRadius:8, background:isWarning?"rgba(255,140,105,0.15)":"rgba(196,164,89,0.1)", border:`1px solid ${isWarning?"rgba(255,140,105,0.4)":"rgba(196,164,89,0.3)"}` }}>
-                <div style={{ fontSize:11, color:"rgba(226,217,197,0.5)", letterSpacing:1 }}>WAKTU SETERUSNYA</div>
-                <div style={{ fontSize:16, fontWeight:600, color:isWarning?"#ff8c69":"#f0e6c8", marginTop:2 }}>{nextPrayer.icon} {nextPrayer.label} · {nextPrayer.time}</div>
-                <div style={{ fontSize:20, fontWeight:700, fontFamily:"'Courier New',monospace", color:isWarning?"#ff8c69":"#c4a459", marginTop:2 }}>{fmt(nextDiff)}</div>
-                {isWarning&&!isAdhan&&<div style={{ fontSize:11, color:"#ff8c69" }}>🔔 Countdown {nextDiff}s lagi...</div>}
+              <div style={{ marginTop:10, padding:"8px 12px", borderRadius:8, background:isWarning?"rgba(255,140,105,0.15)":"rgba(196,164,89,0.1)", border:`1px solid ${isWarning?"rgba(255,140,105,0.4)":"rgba(196,164,89,0.3)"}` }}>
+                <div style={{ fontSize:10, color:"rgba(226,217,197,0.5)", letterSpacing:1 }}>WAKTU SETERUSNYA</div>
+                <div style={{ fontSize:15, fontWeight:600, color:isWarning?"#ff8c69":"#f0e6c8", marginTop:2 }}>{nextPrayer.icon} {nextPrayer.label} · {nextPrayer.time}</div>
+                <div style={{ fontSize:18, fontWeight:700, fontFamily:"'Courier New',monospace", color:isWarning?"#ff8c69":"#c4a459" }}>{fmt(nextDiff)}</div>
+                {isWarning&&!isAdhan&&<div style={{ fontSize:10, color:"#ff8c69" }}>🔔 {nextDiff}s lagi...</div>}
                 {isAdhan&&<div style={{ fontSize:12, color:"#ffb347", fontWeight:"bold" }}>🕌 MASUK WAKTU!</div>}
               </div>
             )}
@@ -264,13 +366,42 @@ export default function WaktuSolat() {
         )}
       </div>
 
+      {/* ── KIBLAT ── */}
+      <div style={{ margin:"10px 16px 0", padding:"14px 16px", borderRadius:10, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(196,164,89,0.15)" }}>
+        <div style={{ fontSize:11, letterSpacing:3, color:"#c4a459", textTransform:"uppercase", marginBottom:10, textAlign:"center" }}>🧭 Arah Kiblat</div>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:20, flexWrap:"wrap" }}>
+          <KiblatCompass bearing={kiblat} deviceHeading={deviceHeading} />
+          <div style={{ textAlign:"center" }}>
+            <div style={{ fontSize:36, fontWeight:700, color:"#4CAF50", fontFamily:"'Courier New',monospace" }}>{Math.round(kiblat)}°</div>
+            <div style={{ fontSize:12, color:"rgba(226,217,197,0.6)", marginTop:4 }}>dari Utara (mengikut arah jam)</div>
+            <div style={{ fontSize:12, color:"rgba(226,217,197,0.5)", marginTop:2 }}>Zon: {data.label}</div>
+            <div style={{ fontSize:11, color:"rgba(196,164,89,0.5)", marginTop:6 }}>🕋 Kaabah, Makkah Al-Mukarramah</div>
+
+            {compassPermission === "idle" && (
+              <button onClick={e=>{e.stopPropagation();requestCompass();}} style={{ marginTop:10, padding:"8px 16px", borderRadius:20, border:"1px solid rgba(76,175,80,0.4)", background:"rgba(76,175,80,0.1)", color:"#4CAF50", fontSize:12, cursor:"pointer" }}>
+                📱 Aktif Kompas Phone
+              </button>
+            )}
+            {compassPermission === "granted" && deviceHeading !== null && (
+              <div style={{ marginTop:8, fontSize:11, color:"#4CAF50" }}>✅ Kompas aktif — putar phone ke arah jarum hijau</div>
+            )}
+            {compassPermission === "granted" && deviceHeading === null && (
+              <div style={{ marginTop:8, fontSize:11, color:"#c4a459" }}>⏳ Tunggu sensor kompas...</div>
+            )}
+            {compassPermission === "denied" && (
+              <div style={{ marginTop:8, fontSize:11, color:"#ff8c69" }}>❌ Akses kompas ditolak</div>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* ── PRAYER LIST + HADITH ── */}
       <div style={{ padding:"10px 16px 0" }}>
-        {displayItems.map((item, idx) => {
-          if(item.type === "hadith") {
-            const h = HADITH[item.idx % HADITH.length];
+        {displayItems.map((item,idx) => {
+          if(item.type==="hadith") {
+            const h=HADITH[item.idx%HADITH.length];
             return (
-              <div key={`hadith-${idx}`} style={{ margin:"6px 0", padding:"12px 14px", borderRadius:10, background:"rgba(196,164,89,0.06)", border:"1px solid rgba(196,164,89,0.15)", textAlign:"center" }}>
+              <div key={`h-${idx}`} style={{ margin:"6px 0", padding:"12px 14px", borderRadius:10, background:"rgba(196,164,89,0.06)", border:"1px solid rgba(196,164,89,0.15)", textAlign:"center" }}>
                 <div style={{ fontSize:10, letterSpacing:3, color:"rgba(196,164,89,0.5)", textTransform:"uppercase", marginBottom:6 }}>✦ Mutiara Hadith ✦</div>
                 <div style={{ fontSize:15, color:"#c4a459", fontFamily:"serif", lineHeight:1.7, marginBottom:6, direction:"rtl" }}>{h.arab}</div>
                 <div style={{ fontSize:12, color:"rgba(226,217,197,0.75)", lineHeight:1.6, fontStyle:"italic", marginBottom:4 }}>"{h.ms}"</div>
@@ -278,15 +409,11 @@ export default function WaktuSolat() {
               </div>
             );
           }
-
-          const p = item.data;
+          const p=item.data;
           if(!p.sec) return null;
-          const isPast=p.sec<ns;
-          const isCurrent=currentIdx>=0&&prayerList[currentIdx]?.key===p.key;
-          const isNext=nextPrayer?.key===p.key;
-          const isNearby=isNext&&nextDiff<=60;
+          const isPast=p.sec<ns, isCurrent=currentIdx>=0&&prayerList[currentIdx]?.key===p.key;
+          const isNext=nextPrayer?.key===p.key, isNearby=isNext&&nextDiff<=60;
           const diff=p.sec-ns;
-
           return (
             <div key={p.key} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 16px", marginBottom:4, borderRadius:10, background:isCurrent?"linear-gradient(135deg,rgba(138,170,122,0.2),rgba(138,170,122,0.06))":isNearby?"linear-gradient(135deg,rgba(255,140,105,0.15),rgba(255,140,105,0.04))":"rgba(255,255,255,0.03)", border:isCurrent?"1px solid rgba(138,170,122,0.5)":isNearby?"1px solid rgba(255,140,105,0.4)":"1px solid rgba(255,255,255,0.05)", opacity:isPast&&!isCurrent?0.45:1, transition:"all 0.3s" }}>
               <div style={{ display:"flex", alignItems:"center", gap:12 }}>
@@ -312,7 +439,7 @@ export default function WaktuSolat() {
           <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
             <div>
               <div style={{ fontSize:14, fontWeight:600, color:"#e2d9c5" }}>🔔 Alarm Peringatan</div>
-              <div style={{ fontSize:11, color:"rgba(226,217,197,0.4)", marginTop:2 }}>Beep countdown 60 saat · Nada masuk waktu 10 saat</div>
+              <div style={{ fontSize:11, color:"rgba(226,217,197,0.4)", marginTop:2 }}>Beep countdown 60 saat · 3 beep masuk waktu</div>
             </div>
             <button onClick={e=>{e.stopPropagation();initAudio();setAlarmOn(v=>!v);}} style={{ padding:"7px 18px", borderRadius:20, border:"none", background:alarmOn?"#8aaa7a":"rgba(255,255,255,0.1)", color:alarmOn?"#0b1320":"#e2d9c5", fontWeight:700, fontSize:12, cursor:"pointer" }}>
               {alarmOn?"HIDUP":"MATI"}
