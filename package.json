@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Jam Waktu Solat Institut Teknologi Unggas — data dari JAKIM via api.waktusolat.app",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
