@@ -254,27 +254,42 @@ const PRAYERS = [
 ];
 
 const HADITH = [
+  // ── AYAT AL-QURAN ──────────────────────────────────────────────────────────
   { arab:"إِنَّ الصَّلاَةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَاباً مَّوْقُوتاً", ms:"Sesungguhnya solat itu adalah kewajipan yang telah ditentukan waktunya ke atas orang-orang yang beriman.", ref:"Al-Quran, An-Nisa' 4:103" },
-  { arab:"بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ وَإِقَامِ الصَّلاَةِ وَإِيتَاءِ الزَّكَاةِ وَالْحَجِّ وَصَوْمِ رَمَضَانَ", ms:"Islam dibina atas lima perkara: syahadah tiada tuhan melainkan Allah dan Muhammad itu Rasul-Nya, mendirikan solat, menunaikan zakat, menunaikan haji, dan berpuasa pada bulan Ramadan.", ref:"Hadith Riwayat Al-Bukhari (no. 8) & Muslim (no. 16)" },
-  { arab:"أَوَّلُ مَا يُحَاسَبُ بِهِ الْعَبْدُ يَوْمَ الْقِيَامَةِ مِنْ عَمَلِهِ صَلاَتُهُ فَإِنْ صَلُحَتْ فَقَدْ أَفْلَحَ وَأَنْجَحَ", ms:"Amalan pertama yang akan dihisab daripada seorang hamba pada hari kiamat ialah solatnya. Jika solatnya baik, maka dia berjaya dan menang.", ref:"Hadith Riwayat At-Tirmizi (no. 413), An-Nasa'i & Ibn Majah — Sahih" },
-  { arab:"الصَّلَوَاتُ الْخَمْسُ وَالْجُمُعَةُ إِلَى الْجُمُعَةِ كَفَّارَةٌ لِمَا بَيْنَهُنَّ مَا لَمْ تُغْشَ الْكَبَائِرُ", ms:"Solat lima waktu dan Jumaat ke Jumaat adalah penghapus dosa di antara keduanya, selagi mana dosa-dosa besar dijauhi.", ref:"Hadith Riwayat Muslim (no. 233)" },
-  { arab:"مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهَرٍ غَمْرٍ عَلَى بَابِ أَحَدِكُمْ يَغْتَسِلُ مِنْهُ كُلَّ يَوْمٍ خَمْسَ مَرَّاتٍ", ms:"Perumpamaan solat lima waktu adalah seperti sungai yang dalam mengalir di depan pintu salah seorang antara kamu, dia mandi daripadanya setiap hari lima kali.", ref:"Hadith Riwayat Muslim (no. 668)" },
-  { arab:"مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ", ms:"Sesiapa yang mengerjakan solat dua waktu yang dingin (Subuh dan Asar), nescaya dia akan masuk syurga.", ref:"Hadith Riwayat Al-Bukhari (no. 574) & Muslim (no. 635)" },
-  { arab:"مَنْ حَافَظَ عَلَيْهَا كَانَتْ لَهُ نُورًا وَبُرْهَانًا وَنَجَاةً يَوْمَ الْقِيَامَةِ", ms:"Sesiapa yang menjaga solat, maka solat itu akan menjadi cahaya, bukti, dan penyelamat baginya pada hari kiamat.", ref:"Hadith Riwayat Ahmad (no. 6576) — Sahih" },
-  { arab:"صَلِّ قَائِمًا فَإِنْ لَمْ تَسْتَطِعْ فَقَاعِدًا فَإِنْ لَمْ تَسْتَطِعْ فَعَلَى جَنْبٍ", ms:"Solatlah dalam keadaan berdiri, jika tidak mampu maka duduklah, jika tidak mampu maka berbaringlah.", ref:"Hadith Riwayat Al-Bukhari (no. 1117)" },
-  { arab:"إِنَّ أَوَّلَ مَا يُحَاسَبُ النَّاسُ بِهِ يَوْمَ الْقِيَامَةِ مِنْ أَعْمَالِهِمُ الصَّلاَةُ", ms:"Sesungguhnya perkara pertama yang akan dihisab daripada manusia pada hari kiamat daripada amalan mereka ialah solat.", ref:"Hadith Riwayat An-Nasa'i (no. 463) — Sahih" },
-  { arab:"اجْعَلُوا آخِرَ صَلاَتِكُمْ بِاللَّيْلِ وِتْرًا", ms:"Jadikanlah solat terakhir kamu pada waktu malam itu solat witir.", ref:"Hadith Riwayat Al-Bukhari (no. 998) & Muslim (no. 751)" },
-  { arab:"الطُّهُورُ شَطْرُ الإِيمَانِ", ms:"Bersuci adalah sebahagian daripada iman.", ref:"Hadith Riwayat Muslim (no. 223)" },
-  { arab:"إِذَا قَامَ أَحَدُكُمْ إِلَى الصَّلاَةِ فَلاَ يَبْصُقَنَّ قِبَلَ وَجْهِهِ فَإِنَّ اللهَ قِبَلَ وَجْهِهِ إِذَا صَلَّى", ms:"Apabila seseorang kamu berdiri untuk solat, janganlah dia meludah ke hadapannya, kerana Allah berada di hadapannya ketika dia solat.", ref:"Hadith Riwayat Al-Bukhari (no. 406) & Muslim (no. 547)" },
-  { arab:"مَنْ تَرَكَ صَلاَةَ الْعَصْرِ فَقَدْ حَبِطَ عَمَلُهُ", ms:"Sesiapa yang meninggalkan solat Asar, maka terhapuslah amalannya.", ref:"Hadith Riwayat Al-Bukhari (no. 553)" },
-  { arab:"بَيْنَ الرَّجُلِ وَبَيْنَ الشِّرْكِ وَالْكُفْرِ تَرْكُ الصَّلاَةِ", ms:"Antara seseorang dengan syirik dan kufur ialah meninggalkan solat.", ref:"Hadith Riwayat Muslim (no. 82)" },
-  { arab:"الصَّلاَةُ عِمَادُ الدِّينِ فَمَنْ أَقَامَهَا فَقَدْ أَقَامَ الدِّينَ وَمَنْ تَرَكَهَا فَقَدْ هَدَمَ الدِّينَ", ms:"Solat adalah tiang agama. Sesiapa yang mendirikannya maka dia telah mendirikan agama, dan sesiapa yang meninggalkannya maka dia telah meruntuhkan agama.", ref:"Hadith Riwayat Al-Baihaqi — Hasan" },
-  { arab:"خَيْرُ صُفُوفِ الرِّجَالِ أَوَّلُهَا وَشَرُّهَا آخِرُهَا", ms:"Sebaik-baik saf lelaki adalah yang pertama, dan seburuk-buruknya ialah yang terakhir.", ref:"Hadith Riwayat Muslim (no. 440)" },
-  { arab:"صَلُّوا كَمَا رَأَيْتُمُونِي أُصَلِّي", ms:"Solatlah kamu sebagaimana kamu melihat aku solat.", ref:"Hadith Riwayat Al-Bukhari (no. 631)" },
-  { arab:"مَنْ صَلَّى الْفَجْرَ فَهُوَ فِي ذِمَّةِ اللهِ", ms:"Sesiapa yang solat Subuh maka dia berada dalam jaminan perlindungan Allah.", ref:"Hadith Riwayat Muslim (no. 657)" },
-  { arab:"لَوْ يَعْلَمُ النَّاسُ مَا فِي النِّدَاءِ وَالصَّفِّ الأَوَّلِ ثُمَّ لَمْ يَجِدُوا إِلاَّ أَنْ يَسْتَهِمُوا عَلَيْهِ لاَسْتَهَمُوا", ms:"Seandainya manusia mengetahui apa yang terdapat pada azan dan saf pertama, kemudian tiada cara untuk mendapatkannya melainkan dengan membuat undian, nescaya mereka akan berundi.", ref:"Hadith Riwayat Al-Bukhari (no. 615) & Muslim (no. 437)" },
-  { arab:"أَقِمِ الصَّلاَةَ لِدُلُوكِ الشَّمْسِ إِلَى غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُودًا", ms:"Dirikanlah solat sejak matahari tergelincir hingga gelap malam dan (dirikanlah pula solat) Subuh. Sesungguhnya solat Subuh itu disaksikan (oleh para malaikat).", ref:"Al-Quran, Al-Isra' 17:78" },
   { arab:"وَأَقِمِ الصَّلاَةَ إِنَّ الصَّلاَةَ تَنْهَى عَنِ الْفَحْشَاءِ وَالْمُنكَرِ", ms:"Dan dirikanlah solat. Sesungguhnya solat itu mencegah daripada perbuatan keji dan mungkar.", ref:"Al-Quran, Al-Ankabut 29:45" },
+  { arab:"أَقِمِ الصَّلاَةَ لِدُلُوكِ الشَّمْسِ إِلَى غَسَقِ اللَّيْلِ وَقُرْآنَ الْفَجْرِ إِنَّ قُرْآنَ الْفَجْرِ كَانَ مَشْهُودًا", ms:"Dirikanlah solat sejak matahari tergelincir hingga gelap malam, dan dirikanlah solat Subuh. Sesungguhnya solat Subuh itu disaksikan oleh para malaikat.", ref:"Al-Quran, Al-Isra' 17:78" },
+
+  // ── HADITH SAHIH ────────────────────────────────────────────────────────────
+  { arab:"بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ وَإِقَامِ الصَّلاَةِ وَإِيتَاءِ الزَّكَاةِ وَالْحَجِّ وَصَوْمِ رَمَضَانَ", ms:"Islam dibina atas lima perkara: syahadah, mendirikan solat, menunaikan zakat, menunaikan haji, dan berpuasa Ramadan.", ref:"Hadith Riwayat Al-Bukhari (no. 8) & Muslim (no. 16)" },
+  { arab:"أَوَّلُ مَا يُحَاسَبُ بِهِ الْعَبْدُ يَوْمَ الْقِيَامَةِ مِنْ عَمَلِهِ صَلاَتُهُ فَإِنْ صَلُحَتْ فَقَدْ أَفْلَحَ وَأَنْجَحَ", ms:"Amalan pertama yang akan dihisab ialah solat. Jika solatnya baik, maka dia berjaya dan menang.", ref:"Hadith Riwayat At-Tirmizi (no. 413) — Sahih" },
+  { arab:"الصَّلَوَاتُ الْخَمْسُ وَالْجُمُعَةُ إِلَى الْجُمُعَةِ كَفَّارَةٌ لِمَا بَيْنَهُنَّ مَا لَمْ تُغْشَ الْكَبَائِرُ", ms:"Solat lima waktu dan Jumaat ke Jumaat adalah penghapus dosa di antaranya, selagi dosa besar dijauhi.", ref:"Hadith Riwayat Muslim (no. 233)" },
+  { arab:"مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ", ms:"Sesiapa yang mengerjakan solat dua waktu yang sejuk (Subuh dan Asar), nescaya dia akan masuk syurga.", ref:"Hadith Riwayat Al-Bukhari (no. 574) & Muslim (no. 635)" },
+  { arab:"مَنْ صَلَّى الْفَجْرَ فَهُوَ فِي ذِمَّةِ اللهِ", ms:"Sesiapa yang solat Subuh maka dia berada dalam jaminan perlindungan Allah.", ref:"Hadith Riwayat Muslim (no. 657)" },
+  { arab:"صَلُّوا كَمَا رَأَيْتُمُونِي أُصَلِّي", ms:"Solatlah kamu sebagaimana kamu melihat aku solat.", ref:"Hadith Riwayat Al-Bukhari (no. 631)" },
+  { arab:"الصَّلاَةُ عِمَادُ الدِّينِ فَمَنْ أَقَامَهَا فَقَدْ أَقَامَ الدِّينَ وَمَنْ تَرَكَهَا فَقَدْ هَدَمَ الدِّينَ", ms:"Solat adalah tiang agama. Sesiapa yang mendirikannya maka dia mendirikan agama, sesiapa yang meninggalkannya maka dia meruntuhkan agama.", ref:"Hadith Riwayat Al-Baihaqi — Hasan" },
+  { arab:"مَنْ حَافَظَ عَلَيْهَا كَانَتْ لَهُ نُورًا وَبُرْهَانًا وَنَجَاةً يَوْمَ الْقِيَامَةِ", ms:"Sesiapa yang menjaga solat, maka solat itu akan menjadi cahaya, bukti, dan penyelamat baginya pada hari kiamat.", ref:"Hadith Riwayat Ahmad (no. 6576) — Sahih" },
+
+  // ── DOA-DOA MASUK & KELUAR MASJID ─────────────────────────────────────────
+  { arab:"اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ", ms:"Ya Allah, bukakanlah bagiku pintu-pintu rahmat-Mu.", ref:"Doa Masuk Masjid — Hadith Riwayat Muslim (no. 713)" },
+  { arab:"اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ", ms:"Ya Allah, sesungguhnya aku memohon kepada-Mu daripada kurnia-Mu.", ref:"Doa Keluar Masjid — Hadith Riwayat Muslim (no. 713)" },
+
+  // ── DOA SELEPAS AZAN ────────────────────────────────────────────────────────
+  { arab:"اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلاَةِ الْقَائِمَةِ آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ", ms:"Ya Allah, Tuhan seruan yang sempurna dan solat yang akan didirikan ini, kurniakanlah kepada Muhammad al-wasilah dan kelebihan.", ref:"Doa Selepas Azan — Hadith Riwayat Al-Bukhari (no. 614)" },
+
+  // ── DOA IKTIKAF / DUDUK DI MASJID ─────────────────────────────────────────
+  { arab:"سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ", ms:"Maha Suci Engkau ya Allah dan dengan memuji-Mu, aku bersaksi bahawa tiada tuhan selain Engkau, aku memohon keampunan-Mu dan bertaubat kepada-Mu.", ref:"Kaffaratul Majlis — Hadith Riwayat At-Tirmizi (no. 3433) — Sahih" },
+
+  // ── DOA MEMOHON KETEGUHAN SOLAT ────────────────────────────────────────────
+  { arab:"رَبِّ اجْعَلْنِي مُقِيمَ الصَّلاَةِ وَمِن ذُرِّيَّتِي رَبَّنَا وَتَقَبَّلْ دُعَاءِ", ms:"Ya Tuhanku, jadikanlah aku dan anak cucuku orang yang tetap mendirikan solat. Ya Tuhan kami, perkenankanlah doaku.", ref:"Al-Quran, Ibrahim 14:40" },
+  { arab:"اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ", ms:"Ya Allah, tolonglah aku untuk sentiasa berzikir kepada-Mu, bersyukur kepada-Mu, dan beribadah kepada-Mu dengan sebaik-baiknya.", ref:"Doa Selepas Solat — Hadith Riwayat Abu Dawud (no. 1522) — Sahih" },
+
+  // ── DOA PAGI & PETANG ──────────────────────────────────────────────────────
+  { arab:"اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ", ms:"Ya Allah, dengan-Mu kami memasuki waktu pagi, dengan-Mu kami memasuki waktu petang, dengan-Mu kami hidup, dengan-Mu kami mati, dan kepada-Mu kami dibangkitkan.", ref:"Doa Pagi — Hadith Riwayat At-Tirmizi (no. 3391) — Sahih" },
+  { arab:"اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ", ms:"Ya Allah, Engkau adalah Tuhanku, tiada tuhan selain Engkau, Engkau menciptakanku dan aku adalah hamba-Mu, aku berada di atas perjanjian dan janji-Mu semampuku.", ref:"Sayyidul Istighfar — Hadith Riwayat Al-Bukhari (no. 6306)" },
+
+  // ── DOA MOHON KEAMPUNAN ────────────────────────────────────────────────────
+  { arab:"رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ", ms:"Ya Tuhan kami, kami telah menzalimi diri kami sendiri, dan jika Engkau tidak mengampuni kami dan merahmati kami, nescaya kami termasuk orang yang rugi.", ref:"Doa Nabi Adam & Hawa — Al-Quran, Al-A'raf 7:23" },
+  { arab:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", ms:"Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami dari azab neraka.", ref:"Al-Quran, Al-Baqarah 2:201 — Doa yang paling banyak dibaca Rasulullah ﷺ" },
 ];
 
 function toSec(t) { const [h,m]=t.split(":").map(Number); return h*3600+m*60; }
@@ -817,7 +832,9 @@ export default function WaktuSolat() {
       {/* ── HADITH ── */}
       <div style={{ padding:"0 24px 16px" }}>
         <div style={{ background:T.bgCard, borderRadius:14, border:`1.5px solid ${T.border}`, padding:"20px 24px", textAlign:"center", transition:"opacity 0.5s", opacity:hadithFade?1:0 }}>
-          <div style={{ fontSize:10, letterSpacing:3, color:G, textTransform:"uppercase", fontWeight:700, marginBottom:10 }}>✦ Mutiara Hadith ✦</div>
+          <div style={{ fontSize:10, letterSpacing:3, color:G, textTransform:"uppercase", fontWeight:700, marginBottom:10 }}>
+            {hadith.ref.includes("Doa") || hadith.ref.includes("Al-Quran") && hadith.arab.includes("رَبَّنَا") ? "🤲 Doa" : hadith.ref.includes("Al-Quran") ? "📖 Ayat Al-Quran" : "✦ Mutiara Hadith ✦"}
+          </div>
           <div style={{ fontSize:22, color:G, fontFamily:"serif", direction:"rtl", lineHeight:1.8, marginBottom:10 }}>{hadith.arab}</div>
           <div style={{ fontSize:16, color:T.textMid, lineHeight:1.7, fontStyle:"italic", marginBottom:8 }}>"{hadith.ms}"</div>
           <div style={{ fontSize:12, color:T.textDim }}>— {hadith.ref}</div>
