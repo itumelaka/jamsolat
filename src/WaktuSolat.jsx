@@ -268,6 +268,7 @@ export default function WaktuSolat() {
     return () => window.removeEventListener("deviceorientation", handleOrientation);
   }, []);
 
+  const isMobile = window.innerWidth < 768;
   const data = PRAYER_DB[zone];
   const kiblat = kiblatBearing(data.lat, data.lng);
   const prayerList = PRAYERS.map(p=>({ ...p, time:data[p.key]||null, sec:data[p.key]?toSeconds(data[p.key]):null }));
@@ -367,8 +368,8 @@ export default function WaktuSolat() {
         )}
       </div>
 
-      {/* ── KIBLAT ── */}
-      <div style={{ margin:"10px 16px 0", padding:"14px 16px", borderRadius:10, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(196,164,89,0.15)" }}>
+      {/* ── KIBLAT — mobile only ── */}
+      {isMobile && <div style={{ margin:"10px 16px 0", padding:"14px 16px", borderRadius:10, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(196,164,89,0.15)" }}>
         <div style={{ fontSize:11, letterSpacing:3, color:"#c4a459", textTransform:"uppercase", marginBottom:10, textAlign:"center" }}>🧭 Arah Kiblat</div>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:20, flexWrap:"wrap" }}>
           <KiblatCompass bearing={kiblat} deviceHeading={deviceHeading} />
@@ -400,7 +401,7 @@ export default function WaktuSolat() {
             )}
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* ── PRAYER LIST + HADITH ── */}
       <div style={{ padding:"10px 16px 0" }}>
