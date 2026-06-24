@@ -144,49 +144,39 @@ function KiblatCompass({ bearing, deviceHeading }) {
     const cx=90, cy=90, r=80;
     ctx.clearRect(0,0,180,180);
 
-    // Rotate kompas ikut device heading
-    const rotation = deviceHeading !== null ? -deviceHeading : 0;
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rotation * Math.PI / 180);
-    ctx.translate(-cx, -cy);
-
     // Outer ring
     ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
     ctx.strokeStyle="rgba(196,164,89,0.4)"; ctx.lineWidth=1.5; ctx.stroke();
     ctx.beginPath(); ctx.arc(cx,cy,r-1,0,Math.PI*2);
     ctx.fillStyle="#0b1e35"; ctx.fill();
 
-    // Cardinal markers
-    const cardinals = [{l:"U",a:-90},{l:"T",a:0},{l:"S",a:90},{l:"B",a:180}];
-    cardinals.forEach(({l,a})=>{
-      const ang=a*Math.PI/180;
-      ctx.font=`bold ${l==="U"?"13":"10"}px sans-serif`;
-      ctx.fillStyle=l==="U"?"#ff8c69":"rgba(196,164,89,0.6)";
-      ctx.textAlign="center"; ctx.textBaseline="middle";
-      ctx.fillText(l, cx+Math.cos(ang)*(r-14), cy+Math.sin(ang)*(r-14));
-    });
-
-    // Tick marks
+    // Tick marks — statik, tak rotate
     for(let i=0;i<360;i+=10){
       const ang=i*Math.PI/180-Math.PI/2;
       const isMain=i%90===0, isMid=i%45===0;
       ctx.beginPath();
       ctx.moveTo(cx+Math.cos(ang)*(r-4),cy+Math.sin(ang)*(r-4));
       ctx.lineTo(cx+Math.cos(ang)*(r-(isMain?14:isMid?10:7)),cy+Math.sin(ang)*(r-(isMain?14:isMid?10:7)));
-      ctx.strokeStyle=isMain?"rgba(196,164,89,0.8)":"rgba(196,164,89,0.3)";
+      ctx.strokeStyle=isMain?"rgba(196,164,89,0.5)":"rgba(196,164,89,0.2)";
       ctx.lineWidth=isMain?2:1; ctx.stroke();
     }
 
-    ctx.restore();
+    // Kiblat arrow angle
+    // Kalau ada deviceHeading: jarum tunjuk arah kiblat sebenar (bearing - deviceHeading)
+    // Kalau tiada: tunjuk bearing dari Utara sahaja
+    const kiblatAng = deviceHeading !== null
+      ? (bearing - deviceHeading - 90) * Math.PI / 180
+      : (bearing - 90) * Math.PI / 180;
 
-    // Kiblat arrow — ikut bearing
-    const kiblatAng = (bearing - 90) * Math.PI / 180;
-    const arrowLen = r - 22;
+    const arrowLen = r - 18;
 
-    // Arrow body
+    // Glowing effect
+    ctx.shadowColor = "#4CAF50";
+    ctx.shadowBlur = 8;
+
+    // Arrow tail (belakang)
     ctx.beginPath();
-    ctx.moveTo(cx - Math.cos(kiblatAng)*15, cy - Math.sin(kiblatAng)*15);
+    ctx.moveTo(cx - Math.cos(kiblatAng)*18, cy - Math.sin(kiblatAng)*18);
     ctx.lineTo(cx + Math.cos(kiblatAng)*arrowLen, cy + Math.sin(kiblatAng)*arrowLen);
     ctx.strokeStyle="#4CAF50"; ctx.lineWidth=3; ctx.lineCap="round"; ctx.stroke();
 
@@ -196,18 +186,29 @@ function KiblatCompass({ bearing, deviceHeading }) {
     const perpAng = kiblatAng + Math.PI/2;
     ctx.beginPath();
     ctx.moveTo(tipX, tipY);
-    ctx.lineTo(tipX - Math.cos(kiblatAng)*12 + Math.cos(perpAng)*6, tipY - Math.sin(kiblatAng)*12 + Math.sin(perpAng)*6);
-    ctx.lineTo(tipX - Math.cos(kiblatAng)*12 - Math.cos(perpAng)*6, tipY - Math.sin(kiblatAng)*12 - Math.sin(perpAng)*6);
+    ctx.lineTo(tipX - Math.cos(kiblatAng)*14 + Math.cos(perpAng)*7, tipY - Math.sin(kiblatAng)*14 + Math.sin(perpAng)*7);
+    ctx.lineTo(tipX - Math.cos(kiblatAng)*14 - Math.cos(perpAng)*7, tipY - Math.sin(kiblatAng)*14 - Math.sin(perpAng)*7);
     ctx.closePath(); ctx.fillStyle="#4CAF50"; ctx.fill();
 
-    // Kaabah icon at tip
-    ctx.font="14px serif";
+    ctx.shadowBlur = 0;
+
+    // Kaabah icon
+    ctx.font="16px serif";
     ctx.textAlign="center"; ctx.textBaseline="middle";
-    ctx.fillText("🕋", tipX + Math.cos(kiblatAng)*10, tipY + Math.sin(kiblatAng)*10);
+    ctx.fillText("🕋", tipX + Math.cos(kiblatAng)*14, tipY + Math.sin(kiblatAng)*14);
+
+    // U marker atas (statik)
+    ctx.font="bold 12px sans-serif";
+    ctx.fillStyle="rgba(196,164,89,0.5)";
+    ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.fillText("U", cx, cy-(r-10));
+    ctx.fillText("S", cx, cy+(r-10));
+    ctx.fillText("T", cx+(r-10), cy);
+    ctx.fillText("B", cx-(r-10), cy);
 
     // Centre dot
-    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2); ctx.fillStyle="#c4a459"; ctx.fill();
-    ctx.beginPath(); ctx.arc(cx,cy,2,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,6,0,Math.PI*2); ctx.fillStyle="#c4a459"; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,3,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
 
   }, [bearing, deviceHeading]);
 
@@ -383,13 +384,19 @@ export default function WaktuSolat() {
               </button>
             )}
             {compassPermission === "granted" && deviceHeading !== null && (
-              <div style={{ marginTop:8, fontSize:11, color:"#4CAF50" }}>✅ Kompas aktif — putar phone ke arah jarum hijau</div>
+              <div style={{ marginTop:8, padding:"8px 10px", borderRadius:8, background:"rgba(76,175,80,0.1)", border:"1px solid rgba(76,175,80,0.3)" }}>
+                <div style={{ fontSize:12, color:"#4CAF50", fontWeight:600 }}>✅ Kompas aktif</div>
+                <div style={{ fontSize:11, color:"rgba(226,217,197,0.7)", marginTop:3 }}>Pegang phone mendatar, pusing badan kau sampai 🕋 menghala ke atas — itulah arah kiblat!</div>
+              </div>
             )}
             {compassPermission === "granted" && deviceHeading === null && (
               <div style={{ marginTop:8, fontSize:11, color:"#c4a459" }}>⏳ Tunggu sensor kompas...</div>
             )}
             {compassPermission === "denied" && (
-              <div style={{ marginTop:8, fontSize:11, color:"#ff8c69" }}>❌ Akses kompas ditolak</div>
+              <div style={{ marginTop:8, fontSize:11, color:"#ff8c69" }}>❌ Akses kompas ditolak. Cuba refresh page dan allow permission.</div>
+            )}
+            {compassPermission === "idle" && (
+              <div style={{ marginTop:6, fontSize:11, color:"rgba(226,217,197,0.4)" }}>Tekan butang di atas untuk aktifkan sensor kompas phone</div>
             )}
           </div>
         </div>
